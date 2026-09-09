@@ -1,0 +1,38 @@
+{
+  "skill": "OmniLayer Studio",
+  "primary_input": {
+    "type": "landing_page_url",
+    "value": "https://example.com"
+  },
+  "target_audience": "Gen Z; social-first consumers",
+  "tone_style": "cinematic; playful; high-energy",
+  "media_constraints": {
+    "max_video_length_seconds": 15,
+    "resolution": "1080x1920",
+    "aspect_ratio": "9:16"
+  },
+  "diagnostics_token": "DIAG-TOKEN-REPLACE-WITH-TEMP-STRING",
+  "research_whitelist": ["nature.com", "ieee.org", "forbes.com"],
+  "research_blacklist": ["lowqualityblog.example"],
+  "human_approval_flags": {
+    "approve_media_storyboard": false,
+    "approve_summary_before_final": false
+  },
+  "execution_preferences": {
+    "start_layers": ["A_media", "B_market_research", "D_research_synthesis"],
+    "run_diagnostics_if_possible": true,
+    "initial_version": "v0.1",
+    "refine_to_version_after_approval": "v1"
+  },
+  "deliverables_requested": {
+    "media": ["media/v{version}/logo_animation.mp4", "media/v{version}/ugc_ad_vertical.mp4", "media/v{version}/captions.srt", "media/v{version}/voiceover.mp3"],
+    "research": ["research/v{version}/report.html", "research/v{version}/executive_summary.txt", "research/v{version}/data_charts.png"],
+    "diagnostics": ["diagnostics/v{version}/trace.har", "diagnostics/v{version}/profiles.json", "diagnostics/v{version}/remediation.md"],
+    "synthesis": ["synthesis/v{version}/summary.txt", "synthesis/v{version}/citations.json"]
+  },
+  "quality_controls": {
+    "media_checks": ["visual_artifact_detection", "audio_loudness_normalization", "aspect_ratio_validation"],
+    "research_checks": ["citation_completeness", "source_diversity", "plagiarism_scan"]
+  },
+  "notes_for_preprocessing": "Extract brand colors, typography hints, product keywords, and named entities from the landing page. Use those tokens to seed media styles and research queries."
+}
