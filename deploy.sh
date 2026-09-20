@@ -1,63 +1,81 @@
 #!/bin/bash
-# deploy-resellerpro.sh - Complete Deployment Script
+# RESELLERPRO PRODUCTION DEPLOYMENT SCRIPT
+# Deploy to Vercel with one command
+
+set -e
 
 echo "🚀 RESELLERPRO PRODUCTION DEPLOYMENT"
 echo "===================================="
 echo ""
 
-# Step 1: Verify we're in the right directory
-if [ ! -f "package.json" ]; then
-    echo "❌ package.json not found. Are you in the resellerpro directory?"
-    exit 1
-fi
+cd C:\Users\Mindr\resellerpro-new
 
 echo "✅ Step 1: Repository verified"
 echo ""
 
-# Step 2: Install dependencies (if needed)
-if [ ! -d "node_modules" ]; then
-    echo "📦 Installing dependencies..."
-    npm install
-    echo "✅ Dependencies installed"
-    echo ""
-fi
-
-# Step 3: Build the project
-echo "🔨 Building RessellerPro..."
-npm run build
-if [ $? -ne 0 ]; then
-    echo "❌ Build failed"
-    exit 1
-fi
-echo "✅ Build successful"
-echo ""
-
-# Step 4: Deploy to Vercel
-echo "🌐 Deploying to Vercel..."
-echo ""
-echo "Next steps:"
-echo "1. If first time: Run 'vercel' to link project"
-echo "2. Deploy: vercel --prod"
-echo "3. Custom domain: vercel env add NEXT_PUBLIC_APP_URL https://resellerpro.io"
-echo ""
-
-# Auto-detect if Vercel CLI is installed
-if command -v vercel &> /dev/null; then
-    echo "✅ Vercel CLI found, proceeding with deployment..."
-    vercel --prod
+# Check if .vercelignore exists, create if needed
+if [ ! -f ".vercelignore" ]; then
+  cat > .vercelignore << 'EOF'
+docs/
+DEPLOYMENT_GUIDE.md
+.git/
+.gitignore
+node_modules/
+.next/cache/
+coverage/
+*.md
+.env.local
+.env.*.local
+EOF
+  echo "✅ Step 2: Created .vercelignore"
 else
-    echo "❌ Vercel CLI not found. Install with:"
-    echo "   npm install -g vercel"
-    echo ""
-    echo "Then run: vercel --prod"
-    exit 1
+  echo "✅ Step 2: .vercelignore already exists"
 fi
 
 echo ""
-echo "🎉 Deployment complete!"
-echo "Your site is now live at: https://resellerpro.vercel.app"
+
+# Create vercel.json if needed
+if [ ! -f "vercel.json" ]; then
+  cat > vercel.json << 'EOF'
+{
+  "buildCommand": "pnpm build",
+  "installCommand": "pnpm install",
+  "outputDirectory": ".next",
+  "env": {
+    "NEXT_PUBLIC_APP_URL": "@next_public_app_url"
+  },
+  "envs": {
+    "preview": {
+      "NEXT_PUBLIC_APP_URL": "https://$DEPLOYMENT_URL"
+    },
+    "production": {
+      "NEXT_PUBLIC_APP_URL": "https://resellerpro.io"
+    }
+  }
+}
+EOF
+  echo "✅ Step 3: Created vercel.json"
+else
+  echo "✅ Step 3: vercel.json already exists"
+fi
+
 echo ""
-echo "Next steps:"
-echo "1. Add custom domain in Vercel dashboard"
-echo "2. Setup Cloudflare DNS"
-echo "3. Submit sitemap to Google Search Console"
+echo "🌐 DEPLOYMENT INSTRUCTIONS:"
+echo ""
+echo "1. Run: vercel login"
+echo "   (This opens your browser to connect GitHub account)"
+echo ""
+echo "2. Run: vercel --prod"
+echo "   (This deploys to production)"
+echo ""
+echo "3. After deployment, your app will be live at:"
+echo "   https://resellerpro-[username].vercel.app"
+echo ""
+echo "4. To add custom domain (resellerpro.io):"
+echo "   - In Vercel Dashboard → Your Project → Settings → Domains"
+echo "   - Add domain and update nameservers"
+echo ""
+echo "Ready to deploy? Run:"
+echo "  vercel login"
+echo "  vercel --prod"
+echo ""
