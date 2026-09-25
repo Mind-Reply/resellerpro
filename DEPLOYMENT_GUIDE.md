@@ -1,3 +1,5 @@
+> **STATUS — SUPERSEDED (2026-09-25):** This legacy guide contains provider-specific instructions that are no longer authoritative. Use [docs/CONTROL_PLANE.md](docs/CONTROL_PLANE.md) and [docs/RESELLERPRO_RELEASE_CONTRACT.md](docs/RESELLERPRO_RELEASE_CONTRACT.md). Do not treat any historical "LIVE" statement in this file as deployment evidence.
+
 # RESELLERPRO - LIVE DEPLOYMENT GUIDE
 ## Deploy to Production URL in 5 Minutes
 
