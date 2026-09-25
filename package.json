@@ -1,7 +1,7 @@
 {
   "name": "@mindreply/resellerpro",
   "version": "1.0.0",
-  "description": "Enterprise domain registry, hosting & deployment platform (GoDaddy + Namecheap + IONOS + Vercel combined)",
+  "description": "Owner-controlled domain, hosting and deployment operating platform",
   "private": true,
   "type": "module",
   "engines": {
@@ -26,8 +26,8 @@
     "db:studio": "prisma studio",
     "db:reset": "prisma migrate reset",
     "generate": "prisma generate",
-    "deploy": "vercel",
-    "deploy:prod": "vercel --prod"
+    "release:check": "pnpm type-check && pnpm build && pnpm test",
+    "release:prepare": "pnpm release:check"
   },
   "dependencies": {
     "next": "^15.1.0",
