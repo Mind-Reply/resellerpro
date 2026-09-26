@@ -1,5 +1,19 @@
-# ResellerPro canonical repository
+# ResellerPro organization repository authority
 
-The production source of truth is angellllkr-eng/resellerpro-platform.
+**Product:** ResellerPro  
+**Organization repository:** `Mind-Reply/resellerpro`  
+**Current implementation source:** `angellllkr-eng/resellerpro-platform`  
+**State:** CONSOLIDATION IN PROGRESS
 
-Do not add new ResellerPro production code here. Use the canonical repository for all future product, provider, deployment, execution, commerce and tooling work.
+This repository is the organization destination. The personal implementation is source-frozen while its code, tests, deployment configuration and evidence are transferred and reconciled here.
+
+Do not treat the old personal repository as a second production product.
+
+Runtime target:
+
+`GitHub → validation → ResellerPro → Cloudflare Workers/OpenNext → smoke/health → evidence`
+
+Vercel is legacy evidence only.
+
+Transfer tracking:
+https://github.com/Mind-Reply/resellerpro/issues/3
