@@ -1,38 +1,71 @@
-# ResellerPro — canonical organization repository
+# ResellerPro
 
-**Product:** ResellerPro  
-**Canonical organization repository:** `Mind-Reply/resellerpro`  
-**Current implementation source:** `angellllkr-eng/resellerpro-platform`  
-**Status:** CONSOLIDATION IN PROGRESS
+A premium, owner-controlled reseller platform for domains, commerce, provider orchestration and controlled execution.
 
-This repository is the single organization destination for ResellerPro. The larger personal implementation has been verified as the current source candidate and must be migrated/absorbed here before this repository is treated as the production implementation.
+**Canonical repository:** `Mind-Reply/resellerpro`  
+**Runtime direction:** ResellerPro + Cloudflare / OpenNext  
+**Production rule:** validate → record evidence → approve → release → verify
 
-## Source-of-truth rule
+## Product identity
 
-There must be exactly one active ResellerPro implementation.
+ResellerPro is an enterprise-grade operating surface, not a generic dashboard template.
 
-Until the migration is completed:
-- Do not create new ResellerPro implementations.
-- Do not split features between this repository and `angellllkr-eng/resellerpro-platform`.
-- Treat `angellllkr-eng/resellerpro-platform` as a **source-freeze migration source**, not a second product.
-- Preserve unique useful code, documentation and evidence during migration.
-- Do not claim production runtime health from repository state alone.
+The interface should communicate:
+- control without clutter
+- commercial clarity
+- provider-neutral orchestration
+- strong ownership boundaries
+- visible verification and release state
+- premium engineering quality
 
-## Runtime policy
+## Privacy / public identity rule
 
-Target release path:
+Do not expose the owner's personal name, personal GitHub handle, personal profile URLs, private email addresses, internal account names, local filesystem names, or private infrastructure identifiers in the public product UI.
 
-**GitHub → validation → ResellerPro → Cloudflare Workers/OpenNext → smoke/health → evidence**
+Public UI uses **ResellerPro**, **Mind-Reply**, and approved product language only.
 
-Vercel is legacy evidence only.
+Private owner/control information belongs behind authenticated owner surfaces and must never leak through:
+- page titles
+- metadata
+- Open Graph data
+- footer copy
+- browser-visible source labels
+- demo data
+- error messages
+- client bundles
+- public API responses
+- screenshots
+- repository branding
 
-## Security
+## Design direction
 
-Credentials, customer data, payment secrets and provider secrets must remain outside Git history and in the approved secret-management layer.
+**Reading this as:** enterprise commerce/control product for technical operators and business owners, with a premium dark editorial-control language, leaning toward restrained Swiss grid discipline plus a sharp cobalt signal accent.
 
-## Migration state
+Design priorities:
+1. clear hierarchy
+2. high information confidence
+3. premium typography
+4. deliberate whitespace
+5. restrained motion
+6. strong mobile behavior
+7. no generic glassmorphism
+8. no exposed personal identity
 
-The organization destination is intentionally kept explicit so repository names no longer imply two products. The remaining work is content transfer/reconciliation and final repository-administration cleanup (archive/rename/delete) where supported.
+The public experience should feel like a serious infrastructure company with an unusually polished command surface.
 
-Reference source:
-https://github.com/angellllkr-eng/resellerpro-platform
+## Canonical public vocabulary
+
+SEE → UNDERSTAND → CHECK → PROVE → DECIDE → ACT → CONFIRM
+
+Integrity states:
+CLEAR · CHECKING · MISMATCH · UNPROVEN · STOPPED · APPROVED · LIVE
+
+## Runtime truth
+
+Repository state is not runtime proof. A deployment is only represented as live after URL/health verification and evidence recording.
+
+## Current consolidation
+
+The organization repository is the production destination. The historical personal implementation remains source-frozen until the complete implementation tree is reconciled and verified here.
+
+See `CANONICAL_POINTER.md` and `SOURCE_SYNC_MANIFEST_2026-09-26.md`.
