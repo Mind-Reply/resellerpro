@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+const integrity = ["CLEAR", "CHECKING", "MISMATCH", "UNPROVEN", "STOPPED", "APPROVED", "LIVE"];
+
 const capabilities = [
   ["01", "Deploy", "Git-connected builds, previews, promotion, rollback and release evidence."],
   ["02", "Domains", "Domain inventory, DNS intent, certificates and environment-aware routing."],
