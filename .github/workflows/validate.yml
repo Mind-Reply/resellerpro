@@ -22,6 +22,14 @@ jobs:
           node-version: 20
           cache: npm
       - name: Install
-        run: npm install --ignore-scripts
+        run: npm ci --ignore-scripts
       - name: Type check
-        run: npx tsc --noEmit
+        run: npm run type-check
+      - name: Integrity tests
+        run: npm test -- --runInBand
+      - name: Static pre-deploy validation
+        run: npm run validate
+      - name: Static production configuration validation
+        run: npm run check:production-config
+      - name: Production build
+        run: npm run build
