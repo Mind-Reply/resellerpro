@@ -3,8 +3,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://resellerpro.mind-reply.com"),
-  title: { default: "ResellerPro — Deployment, domains, hosting and control", template: "%s | ResellerPro" },
-  description: "A provider-neutral deployment and hosting control layer for builders, agencies and operators.",
+  title: { default: "ResellerPro — Deployment control", template: "%s | ResellerPro" },
+  description: "Provider-neutral deployment, domain, hosting and release control.",
   alternates: { canonical: "/" },
   robots: { index: true, follow: true },
 };
