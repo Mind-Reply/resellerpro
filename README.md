@@ -1,29 +1,38 @@
-# ResellerPro — legacy repository pointer
+# ResellerPro — canonical organization repository
 
-> Canonical source: https://github.com/angellllkr-eng/resellerpro-platform
+**Product:** ResellerPro  
+**Canonical organization repository:** `Mind-Reply/resellerpro`  
+**Current implementation source:** `angellllkr-eng/resellerpro-platform`  
+**Status:** CONSOLIDATION IN PROGRESS
 
-This repository is retained as historical/provenance material only. It is **not** a production build target and must not receive new ResellerPro feature, provider, deployment, commerce, execution, or tooling work.
+This repository is the single organization destination for ResellerPro. The larger personal implementation has been verified as the current source candidate and must be migrated/absorbed here before this repository is treated as the production implementation.
 
-## Canonical operating rule
+## Source-of-truth rule
 
-All future ResellerPro work belongs in the canonical private repository:
+There must be exactly one active ResellerPro implementation.
 
-- Repository: angellllkr-eng/resellerpro-platform
-- Product: ResellerPro
-- Primary deployment: Cloudflare Workers + OpenNext
-- Owner: A.K. / Angel Krastev
-- Status authority: canonical repository evidence and release gates
+Until the migration is completed:
+- Do not create new ResellerPro implementations.
+- Do not split features between this repository and `angellllkr-eng/resellerpro-platform`.
+- Treat `angellllkr-eng/resellerpro-platform` as a **source-freeze migration source**, not a second product.
+- Preserve unique useful code, documentation and evidence during migration.
+- Do not claim production runtime health from repository state alone.
 
-The canonical repository contains the current application, Cloudflare deployment configuration, execution/evidence model, provider adapters, commerce surfaces, tests, CI/CD and launch documentation.
+## Runtime policy
 
-Do not fork, copy, or extend this legacy repository for production.
+Target release path:
 
-## Why this repository is retained
+**GitHub → validation → ResellerPro → Cloudflare Workers/OpenNext → smoke/health → evidence**
 
-This repository contains an earlier ResellerPro implementation and historical product/design work. It remains available for provenance and recovery reference, but it is intentionally separated from the production source of truth.
+Vercel is legacy evidence only.
 
 ## Security
 
-This public repository must contain only content that is safe to expose publicly. Production credentials, database credentials, payment secrets, provider credentials, customer data and private deployment configuration must remain outside Git history and be managed through the appropriate secret store.
+Credentials, customer data, payment secrets and provider secrets must remain outside Git history and in the approved secret-management layer.
 
-Canonical source: https://github.com/angellllkr-eng/resellerpro-platform
+## Migration state
+
+The organization destination is intentionally kept explicit so repository names no longer imply two products. The remaining work is content transfer/reconciliation and final repository-administration cleanup (archive/rename/delete) where supported.
+
+Reference source:
+https://github.com/angellllkr-eng/resellerpro-platform
