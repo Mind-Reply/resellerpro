@@ -1,33 +1,28 @@
 import Link from "next/link";
 
 const capabilities = [
-  ["Deploy", "Git-connected builds, preview environments, release promotion, rollback and deployment evidence."],
-  ["Domains", "Domain inventory, DNS intent, certificate state and environment-aware routing."],
-  ["Hosting", "Provider-neutral runtime contracts spanning Cloudflare/OpenNext, Cloud Run and future providers."],
-  ["Providers", "One control surface for infrastructure providers instead of a provider-locked product boundary."],
-  ["Environments", "Development, preview, staging and production boundaries with explicit release gates."],
-  ["Secrets", "Environment-scoped secret references without committing credentials or exposing them to clients."],
-  ["Observability", "Build output, deployment events, health checks, runtime logs and evidence receipts."],
-  ["Teams", "Owner control, roles, approvals and auditable actions for agencies and enterprise operators."],
-  ["Billing", "Tenant plans, usage boundaries and Stripe-ready commercial contracts; settlement remains explicit."],
-  ["Edge", "Locale-aware routing, regional delivery contracts and CDN/edge execution without duplicate roots."],
-  ["Data", "Supabase/Postgres control-plane integration with RLS-first security and provider-neutral records."],
-  ["Automation", "Human-command execution: actions are prepared, approved, executed and verified rather than silently mutated."],
+  ["01", "Deploy", "Git-connected builds, previews, promotion, rollback and release evidence."],
+  ["02", "Domains", "Domain inventory, DNS intent, certificates and environment-aware routing."],
+  ["03", "Runtime", "Provider-neutral execution across edge, serverless and managed runtimes."],
+  ["04", "Environments", "Development, preview, staging and production boundaries with explicit gates."],
+  ["05", "Secrets", "Environment-scoped references without credentials in source or client bundles."],
+  ["06", "Observe", "Build output, deployment events, health checks and evidence receipts."],
+  ["07", "Control", "Roles, approvals and auditable actions for teams and operators."],
+  ["08", "Commerce", "Plans, usage boundaries and explicit payment/settlement contracts."],
+  ["09", "Edge", "Locale-aware delivery and regional execution without architectural lock-in."],
+  ["10", "Data", "RLS-first control-plane records with provider-neutral interfaces."],
+  ["11", "Automation", "Prepared, approved, executed and verified actions — no silent mutation."],
+  ["12", "Recovery", "Promotion and rollback paths designed into the release surface."],
 ];
 
-const matrix = [
-  ["Git-connected deployment", "Target", "READY"],
-  ["Preview environments", "Target", "CONTRACT"],
-  ["Custom domains + DNS", "Target", "CONTRACT"],
-  ["Environment variables / secrets", "Target", "CONTRACT"],
-  ["Build logs + deployment history", "Target", "CONTRACT"],
-  ["Rollback / promotion", "Target", "CONTRACT"],
-  ["Edge / serverless runtimes", "Target", "CONTRACT"],
-  ["Observability + health evidence", "Target", "CONTRACT"],
-  ["Teams / approvals / audit", "Target", "CONTRACT"],
-  ["Provider-neutral infrastructure", "ResellerPro differentiator", "READY"],
-  ["Cloudflare/OpenNext path", "Current direction", "READY"],
-  ["Supabase control plane", "Current direction", "READY"],
+const release = [
+  ["01", "SOURCE", "Repository and change selected"],
+  ["02", "BUILD", "Artifact produced and checked"],
+  ["03", "PREVIEW", "Environment exposed for review"],
+  ["04", "APPROVE", "Explicit release decision"],
+  ["05", "DEPLOY", "Provider execution"],
+  ["06", "VERIFY", "Health and runtime checks"],
+  ["07", "PROVE", "Evidence recorded"],
 ];
 
 export default function Home() {
@@ -37,125 +32,177 @@ export default function Home() {
     name: "ResellerPro",
     applicationCategory: "BusinessApplication",
     operatingSystem: "Web",
-    description: "Provider-neutral deployment, domain, hosting and owner-control platform.",
-    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    description: "A provider-neutral deployment, domain, hosting and control platform.",
   };
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[#07090d] text-slate-100">
+    <main className="min-h-screen bg-[#f4f3ef] text-[#10110f]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <div className="pointer-events-none fixed inset-0 -z-0">
-        <div className="absolute -left-32 top-10 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl" />
-        <div className="absolute right-0 top-64 h-[32rem] w-[32rem] rounded-full bg-blue-600/10 blur-3xl" />
-      </div>
-
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#07090d]/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <Link href="/" className="flex items-center gap-3 font-black tracking-tight">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-cyan-300 to-blue-600 text-sm text-slate-950">R</span>
-            <span>ResellerPro</span>
+      <header className="border-b border-[#10110f]/10 bg-[#f4f3ef]/95 backdrop-blur">
+        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-5 md:px-10">
+          <Link href="/" className="flex items-center gap-3" aria-label="ResellerPro home">
+            <span className="grid h-9 w-9 place-items-center border border-[#10110f] bg-[#10110f] font-mono text-xs font-bold text-[#f4f3ef]">RP</span>
+            <span className="text-[15px] font-semibold tracking-[-0.02em]">ResellerPro</span>
           </Link>
-          <nav className="hidden gap-6 text-sm text-slate-400 md:flex">
-            <a href="#platform" className="hover:text-white">Platform</a>
-            <a href="#capabilities" className="hover:text-white">Capabilities</a>
-            <a href="#matrix" className="hover:text-white">Baseline</a>
-            <a href="#release" className="hover:text-white">Release</a>
+
+          <nav className="hidden items-center gap-8 text-[13px] font-medium text-[#10110f]/60 md:flex">
+            <a href="#platform" className="transition hover:text-[#10110f]">Platform</a>
+            <a href="#capabilities" className="transition hover:text-[#10110f]">Capabilities</a>
+            <a href="#baseline" className="transition hover:text-[#10110f]">Baseline</a>
+            <a href="#release" className="transition hover:text-[#10110f]">Release</a>
           </nav>
-          <Link href="#release" className="rounded-full bg-white px-4 py-2 text-xs font-bold text-slate-950 hover:bg-cyan-200">Inspect platform</Link>
+
+          <a href="#platform" className="border border-[#10110f] bg-[#10110f] px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-[#2a2b28]">
+            Explore platform
+          </a>
         </div>
       </header>
 
-      <section id="platform" className="relative mx-auto max-w-7xl px-6 pb-24 pt-20 md:pt-32">
-        <div className="max-w-5xl">
-          <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/5 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-cyan-200">
-            <span className="h-1.5 w-1.5 rounded-full bg-cyan-300" />
-            Provider-neutral deployment control
+      <section id="platform" className="mx-auto max-w-[1440px] px-5 pb-24 pt-20 md:px-10 md:pb-32 md:pt-28">
+        <div className="grid gap-16 lg:grid-cols-[1.15fr_.85fr] lg:items-end">
+          <div>
+            <p className="mb-7 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-[#10110f]/45">
+              Deployment control / infrastructure layer
+            </p>
+            <h1 className="max-w-5xl text-[clamp(3.5rem,8vw,7.8rem)] font-semibold leading-[0.86] tracking-[-0.075em]">
+              Ship without giving your architecture away.
+            </h1>
+            <p className="mt-9 max-w-2xl text-lg leading-8 text-[#10110f]/60 md:text-xl">
+              ResellerPro brings code, builds, previews, domains, environments, runtime providers, approvals and release evidence into one controlled surface.
+            </p>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <a href="#capabilities" className="bg-[#10110f] px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-[#2a2b28]">Explore capabilities</a>
+              <a href="#baseline" className="border border-[#10110f]/20 px-6 py-3.5 text-sm font-semibold transition hover:border-[#10110f]/50">View baseline</a>
+            </div>
           </div>
-          <h1 className="text-5xl font-black leading-[0.98] tracking-[-0.045em] md:text-7xl">
-            The operating layer between your code and your infrastructure.
-          </h1>
-          <p className="mt-7 max-w-3xl text-lg leading-8 text-slate-400 md:text-xl">
-            ResellerPro is being built to cover the practical deployment surface teams expect from a modern platform: code, builds, previews, domains, hosting, environments, secrets, observability, approvals and release evidence — without making one infrastructure provider your architecture.
-          </p>
-          <div className="mt-10 flex flex-wrap gap-3">
-            <a href="#capabilities" className="rounded-xl bg-cyan-300 px-6 py-3.5 text-sm font-black text-slate-950 shadow-2xl shadow-cyan-500/10 hover:bg-cyan-200">Explore capabilities</a>
-            <a href="#matrix" className="rounded-xl border border-white/10 bg-white/[0.04] px-6 py-3.5 text-sm font-semibold text-slate-200 hover:bg-white/[0.07]">See minimum baseline</a>
+
+          <div className="border-t border-[#10110f]/15 pt-5 lg:mb-2">
+            <div className="grid grid-cols-2 gap-px overflow-hidden border border-[#10110f]/10 bg-[#10110f]/10">
+              {[
+                ["CODE", "Connected source"],
+                ["BUILD", "Repeatable release"],
+                ["EDGE", "Provider-neutral runtime"],
+                ["PROOF", "Recorded evidence"],
+              ].map(([k, v]) => (
+                <div key={k} className="bg-[#eeede8] p-5 md:p-7">
+                  <div className="font-mono text-[10px] font-bold tracking-[0.18em] text-[#10110f]/40">{k}</div>
+                  <div className="mt-8 text-sm font-semibold">{v}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="mt-20 grid gap-4 md:grid-cols-3">
+        <div className="mt-24 grid border-y border-[#10110f]/10 md:grid-cols-3">
           {[
-            ["01", "Connect", "GitHub repository → project → environment"],
+            ["01", "Connect", "Repository → project → environment"],
             ["02", "Prepare", "Build → preview → checks → approval"],
-            ["03", "Release", "Deploy → health → evidence → rollback path"],
+            ["03", "Release", "Deploy → health → evidence → recovery"],
           ].map(([n, t, d]) => (
-            <div key={n} className="group rounded-2xl border border-white/10 bg-white/[0.035] p-6 transition hover:-translate-y-1 hover:border-cyan-300/30">
-              <div className="font-mono text-xs text-cyan-300">{n}</div>
-              <h2 className="mt-5 text-xl font-bold">{t}</h2>
-              <p className="mt-2 text-sm leading-6 text-slate-400">{d}</p>
+            <div key={n} className="border-b border-[#10110f]/10 p-6 last:border-0 md:border-b-0 md:border-r md:last:border-r-0 md:p-8">
+              <div className="font-mono text-[10px] text-[#10110f]/40">{n}</div>
+              <h2 className="mt-12 text-2xl font-semibold tracking-[-0.035em]">{t}</h2>
+              <p className="mt-3 text-sm leading-6 text-[#10110f]/55">{d}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <section id="capabilities" className="border-y border-white/10 bg-white/[0.018]">
-        <div className="mx-auto max-w-7xl px-6 py-24">
-          <div className="max-w-2xl">
-            <p className="font-mono text-xs uppercase tracking-[0.18em] text-cyan-300">Platform surface</p>
-            <h2 className="mt-3 text-4xl font-black tracking-tight md:text-5xl">Minimum enterprise-grade capability set.</h2>
-            <p className="mt-5 text-slate-400">The reference design supplied for this work is treated as a visual direction, not as evidence that any capability is already live.</p>
+      <section id="capabilities" className="border-y border-[#10110f]/10 bg-[#e9e8e2]">
+        <div className="mx-auto max-w-[1440px] px-5 py-24 md:px-10 md:py-32">
+          <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
+            <div>
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-[#10110f]/45">Platform surface</p>
+              <h2 className="mt-4 max-w-3xl text-5xl font-semibold leading-[0.95] tracking-[-0.06em] md:text-7xl">
+                Enterprise-grade by baseline.
+              </h2>
+            </div>
+            <p className="max-w-sm text-sm leading-6 text-[#10110f]/55">
+              The visual system is deliberately quiet: clear hierarchy, hard edges, strong typography and status-first information.
+            </p>
           </div>
-          <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {capabilities.map(([title, body], i) => (
-              <article key={title} className="rounded-2xl border border-white/10 bg-[#0b0f15]/90 p-6 shadow-xl shadow-black/10 transition hover:border-cyan-300/25 hover:bg-[#0d121a]">
-                <div className="font-mono text-[10px] text-slate-500">CAPABILITY {String(i + 1).padStart(2, "0")}</div>
-                <h3 className="mt-5 text-lg font-bold">{title}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-400">{body}</p>
+
+          <div className="mt-16 grid border-l border-t border-[#10110f]/10 sm:grid-cols-2 lg:grid-cols-3">
+            {capabilities.map(([n, title, body]) => (
+              <article key={title} className="group min-h-[220px] border-b border-r border-[#10110f]/10 bg-[#e9e8e2] p-7 transition hover:bg-[#f4f3ef] md:p-8">
+                <div className="flex items-start justify-between">
+                  <span className="font-mono text-[10px] text-[#10110f]/35">{n}</span>
+                  <span className="h-2 w-2 bg-[#10110f]/20 transition group-hover:bg-[#10110f]" />
+                </div>
+                <h3 className="mt-14 text-xl font-semibold tracking-[-0.03em]">{title}</h3>
+                <p className="mt-3 max-w-sm text-sm leading-6 text-[#10110f]/55">{body}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="matrix" className="mx-auto max-w-7xl px-6 py-24">
-        <div className="max-w-2xl">
-          <p className="font-mono text-xs uppercase tracking-[0.18em] text-cyan-300">Competitive baseline</p>
-          <h2 className="mt-3 text-4xl font-black tracking-tight md:text-5xl">Vercel-class expectations, ResellerPro-controlled architecture.</h2>
-          <p className="mt-5 text-slate-400">This is a delivery baseline. “READY” means the repository has a concrete implementation direction; “CONTRACT” means the capability still needs runtime/provider verification.</p>
-        </div>
-        <div className="mt-10 overflow-hidden rounded-2xl border border-white/10">
-          <div className="grid grid-cols-[1.7fr_.9fr_.7fr] border-b border-white/10 bg-white/[0.04] px-5 py-3 font-mono text-[10px] uppercase tracking-wider text-slate-500">
-            <span>Capability</span><span>Position</span><span>Status</span>
+      <section id="baseline" className="mx-auto max-w-[1440px] px-5 py-24 md:px-10 md:py-32">
+        <div className="grid gap-14 lg:grid-cols-[.75fr_1.25fr]">
+          <div>
+            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-[#10110f]/45">Competitive baseline</p>
+            <h2 className="mt-4 text-5xl font-semibold leading-[0.94] tracking-[-0.06em] md:text-6xl">
+              The expectation is the platform.
+            </h2>
+            <p className="mt-7 max-w-md text-sm leading-7 text-[#10110f]/55">
+              Modern deployment platforms establish the minimum. ResellerPro adds a provider-neutral control layer and keeps release state explicit.
+            </p>
           </div>
-          {matrix.map(([a,b,c]) => (
-            <div key={a} className="grid grid-cols-[1.7fr_.9fr_.7fr] border-b border-white/5 px-5 py-4 text-sm last:border-0">
-              <span className="text-slate-200">{a}</span><span className="text-slate-500">{b}</span><span className={c === "READY" ? "font-mono text-cyan-300" : "font-mono text-amber-300"}>{c}</span>
-            </div>
-          ))}
-        </div>
-      </section>
 
-      <section id="release" className="border-t border-white/10 bg-gradient-to-b from-cyan-400/[0.06] to-transparent">
-        <div className="mx-auto max-w-7xl px-6 py-24">
-          <div className="grid gap-12 lg:grid-cols-[1.2fr_.8fr] lg:items-end">
-            <div>
-              <p className="font-mono text-xs uppercase tracking-[0.18em] text-cyan-300">Release contract</p>
-              <h2 className="mt-3 text-4xl font-black tracking-tight md:text-5xl">Build it once. Verify it. Then release.</h2>
-              <p className="mt-5 max-w-2xl text-slate-400">ResellerPro will treat deployment evidence as part of the platform, not an afterthought. GitHub remains source control; runtime providers remain replaceable; the control layer records what actually happened.</p>
-            </div>
-            <div className="rounded-2xl border border-cyan-300/20 bg-cyan-300/[0.05] p-7">
-              <div className="font-mono text-xs text-cyan-200">RELEASE PIPELINE</div>
-              <div className="mt-5 space-y-3 font-mono text-sm text-slate-300">
-                {["SOURCE", "BUILD", "PREVIEW", "CHECK", "APPROVE", "DEPLOY", "HEALTH", "EVIDENCE"].map((x, i) => <div key={x} className="flex items-center gap-3"><span className="text-cyan-300">{String(i + 1).padStart(2, "0")}</span>{x}</div>)}
+          <div className="border-t border-[#10110f]">
+            {[
+              ["Git-connected deployment", "BASELINE"],
+              ["Preview environments", "BASELINE"],
+              ["Custom domains + DNS", "BASELINE"],
+              ["Environment variables / secrets", "BASELINE"],
+              ["Build logs + deployment history", "BASELINE"],
+              ["Promotion / rollback", "BASELINE"],
+              ["Edge / serverless runtimes", "BASELINE"],
+              ["Health + release evidence", "CONTROL"],
+              ["Teams / approvals / audit", "CONTROL"],
+              ["Provider-neutral infrastructure", "CONTROL"],
+            ].map(([name, tag]) => (
+              <div key={name} className="grid grid-cols-[1fr_auto] gap-6 border-b border-[#10110f]/10 py-5">
+                <span className="text-sm font-medium">{name}</span>
+                <span className="font-mono text-[10px] font-bold tracking-[0.16em] text-[#10110f]/40">{tag}</span>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="release" className="bg-[#10110f] text-[#f4f3ef]">
+        <div className="mx-auto max-w-[1440px] px-5 py-24 md:px-10 md:py-32">
+          <div className="grid gap-16 lg:grid-cols-[1fr_1fr]">
+            <div>
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-white/40">Release contract</p>
+              <h2 className="mt-4 max-w-3xl text-5xl font-semibold leading-[0.92] tracking-[-0.06em] md:text-7xl">
+                Build it. Verify it. Release it.
+              </h2>
+              <p className="mt-8 max-w-xl text-base leading-7 text-white/55">
+                Every release has a visible path from source to proof. No hidden mutation. No invented live status.
+              </p>
+            </div>
+
+            <div className="border-t border-white/15">
+              {release.map(([n, name, detail]) => (
+                <div key={n} className="grid grid-cols-[42px_110px_1fr] items-center gap-4 border-b border-white/10 py-5 text-sm">
+                  <span className="font-mono text-[10px] text-white/35">{n}</span>
+                  <span className="font-mono text-[10px] font-bold tracking-[0.16em] text-white/65">{name}</span>
+                  <span className="text-white/45">{detail}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      <footer className="border-t border-white/10 px-6 py-10 text-center text-xs text-slate-500">
-        ResellerPro · Canonical organization repository: Mind-Reply/resellerpro · Runtime state must be externally verified before being called live.
+      <footer className="bg-[#10110f] px-5 pb-10 text-white/35 md:px-10">
+        <div className="mx-auto flex max-w-[1440px] flex-col gap-3 border-t border-white/10 pt-7 text-xs md:flex-row md:items-center md:justify-between">
+          <span>ResellerPro</span>
+          <span>Deployment control · domains · runtime · release evidence</span>
+        </div>
       </footer>
     </main>
   );
