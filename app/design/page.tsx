@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Copy, Check, ArrowRight, Download } from 'lucide-react';
+import { useState, type ReactNode } from 'react';
+import { motion } from 'framer-motion';
+import { Sparkles, Copy, Check, ArrowRight } from 'lucide-react';
 
 // ============= LOGO COMPONENTS =============
 
@@ -98,7 +98,7 @@ function AnimatedGradientMesh() {
 
 // ============= GLASSMORPHIC CARD =============
 
-function GlassmorphicCard({ children, className = '' }) {
+function GlassmorphicCard({ children, className = '' }: { children: ReactNode; className?: string }) {
   return (
     <div className={`relative backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-8 shadow-2xl hover:border-white/40 transition-all hover:shadow-cyan-500/20 ${className}`}>
       <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl pointer-events-none"/>
@@ -109,7 +109,7 @@ function GlassmorphicCard({ children, className = '' }) {
 
 // ============= KINETIC TEXT =============
 
-function KineticText({ text, className = '' }) {
+function KineticText({ text, className = '' }: { text: string; className?: string }) {
   return (
     <div className={className}>
       {text.split('').map((char, i) => (
