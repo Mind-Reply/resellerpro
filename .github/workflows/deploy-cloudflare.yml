@@ -19,7 +19,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
+      - name: Generate Prisma client
+        run: npx prisma generate
       - name: Install
         run: npm install --ignore-scripts
       - name: Type check
@@ -37,7 +39,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
       - name: Install
         run: npm install --ignore-scripts
       - name: Build OpenNext artifact
