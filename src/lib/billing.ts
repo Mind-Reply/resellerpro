@@ -1,7 +1,28 @@
 import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");
+function mode() {
+  return process.env.STRIPE_BILLING_MODE || "disabled";
+}
+
+function stripeKey() {
+  return process.env.STRIPE_SECRET_KEY || "";
+}
+
+function keyMatchesMode() {
+  const current = mode();
+  const key = stripeKey();
+  if (!key || current === "disabled") return false;
+  if (current === "test") return key.startsWith("sk_test_");
+  if (current === "live") return key.startsWith("sk_live_");
+  return false;
+}
+
+function getStripe() {
+  const key = stripeKey();
+  if (!key || !keyMatchesMode()) throw new Error("Stripe billing key/mode configuration is invalid.");
+  return new Stripe(key);
+}
 
 export const BILLING_PLANS = [
   {
@@ -32,10 +53,6 @@ export const BILLING_PLANS = [
 
 export type BillingPlanId = (typeof BILLING_PLANS)[number]["id"];
 
-function mode() {
-  return process.env.STRIPE_BILLING_MODE || "disabled";
-}
-
 function priceId(planId: BillingPlanId) {
   const plan = BILLING_PLANS.find((item) => item.id === planId);
   return plan?.priceEnv ? process.env[plan.priceEnv] || "" : "";
@@ -43,15 +60,14 @@ function priceId(planId: BillingPlanId) {
 
 export function getBillingReadiness() {
   const billingMode = mode();
-  const configured = Boolean(process.env.STRIPE_SECRET_KEY && process.env.STRIPE_WEBHOOK_SECRET);
+  const configured = keyMatchesMode() && Boolean(process.env.STRIPE_WEBHOOK_SECRET);
   return {
     mode: billingMode,
     configured,
     checkoutEnabled:
-      billingMode !== "disabled" &&
       configured &&
       Boolean(priceId("starter") && priceId("growth")),
-    webhookEnabled: Boolean(process.env.STRIPE_WEBHOOK_SECRET),
+    webhookEnabled: configured,
   };
 }
 
@@ -77,7 +93,8 @@ function assertCheckoutReady() {
 function safeReturnUrl(value: string) {
   const parsed = new URL(value);
   const configuredOrigin = process.env.NEXT_PUBLIC_APP_URL;
-  if (configuredOrigin && parsed.origin !== new URL(configuredOrigin).origin) {
+  if (!configuredOrigin) throw new Error("NEXT_PUBLIC_APP_URL is required for checkout redirects.");
+  if (parsed.origin !== new URL(configuredOrigin).origin) {
     throw new Error("returnUrl must remain on the configured application origin.");
   }
   return parsed.toString();
@@ -108,6 +125,7 @@ export async function createCheckoutSession(input: {
     throw new Error("This account is already subscribed to the selected plan.");
   }
 
+  const stripe = getStripe();
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",
     line_items: [{ price, quantity: 1 }],
@@ -183,8 +201,6 @@ async function upsertSubscriptionFromObject(object: any, eventType: string) {
   });
 
   if (!customerId && existing) {
-    const resolvedCustomer = existing.customerId;
-    const resolvedWorkspace = existing.workspaceId;
     await prisma.subscription.update({
       where: { id: existing.id },
       data: {
@@ -194,8 +210,6 @@ async function upsertSubscriptionFromObject(object: any, eventType: string) {
         cancelAtPeriodEnd: Boolean(object.cancel_at_period_end),
       },
     });
-    void resolvedCustomer;
-    void resolvedWorkspace;
     return;
   }
 
@@ -225,9 +239,13 @@ async function upsertSubscriptionFromObject(object: any, eventType: string) {
 }
 
 export async function handleStripeWebhook(rawBody: string, signature: string) {
+  const ready = getBillingReadiness();
+  if (!ready.webhookEnabled) throw new Error("Stripe webhooks are not enabled for this release.");
+
   const secret = process.env.STRIPE_WEBHOOK_SECRET;
   if (!secret) throw new Error("Stripe webhook secret is not configured.");
 
+  const stripe = getStripe();
   const event = stripe.webhooks.constructEvent(rawBody, signature, secret);
 
   const existing = await prisma.webhookEvent.findUnique({
