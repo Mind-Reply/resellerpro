@@ -19,8 +19,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
+          node-version: 22
       - name: Install
         run: npm ci --ignore-scripts
       - name: Type check
@@ -31,5 +30,14 @@ jobs:
         run: npm run validate
       - name: Static production configuration validation
         run: npm run check:production-config
+        run: npm install --ignore-scripts
+      - name: Generate Prisma client
+        run: npx prisma generate
+      - name: Type check
+        run: npm run type-check
+      - name: Prisma validation
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/resellerpro_ci
+        run: npx prisma validate
       - name: Production build
         run: npm run build

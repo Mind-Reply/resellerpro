@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
     ],
   },
   env: {
-    NEXT_PUBLIC_APP_NAME: 'RessellerPro',
+    NEXT_PUBLIC_APP_NAME: 'ResellerPro',
     NEXT_PUBLIC_APP_VERSION: '1.0.0',
   },
   experimental: {
