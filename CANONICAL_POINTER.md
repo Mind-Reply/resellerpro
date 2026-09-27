@@ -2,18 +2,22 @@
 
 **Product:** ResellerPro  
 **Organization repository:** `Mind-Reply/resellerpro`  
-**Current implementation source:** `angellllkr-eng/resellerpro-platform`  
-**State:** CONSOLIDATION IN PROGRESS
+**Current implementation source:** `Mind-Reply/resellerpro`  
+**State:** CANONICAL / CONSOLIDATED
 
-This repository is the organization destination. The personal implementation is source-frozen while its code, tests, deployment configuration and evidence are transferred and reconciled here.
+This repository is the single organization source for the ResellerPro platform.
 
-Do not treat the old personal repository as a second production product.
+Historical sources:
+- `angellllkr-eng/resellerpro-platform` — SOURCE-FREEZE / provenance-only
+- `angellllkr-eng/reseller-pro-enterprise` — SOURCE-FREEZE / provenance-only
+
+The unified implementation now covers the combined platform baseline:
+domains, workspace, provider orchestration, commerce, orders, invoices, account sessions, subscriptions, transactions, acquisition intelligence, analytics, operations and evidence.
 
 Runtime target:
 
 `GitHub → validation → ResellerPro → Cloudflare Workers/OpenNext → smoke/health → evidence`
 
-Vercel is legacy evidence only.
+Vercel is explicitly excluded from the production authority path.
 
-Transfer tracking:
-https://github.com/Mind-Reply/resellerpro/issues/3
+Repository state is not runtime proof. A deployment is only represented as live after URL/health verification and evidence recording.
