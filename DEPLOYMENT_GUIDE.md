@@ -1,322 +1,37 @@
-# RESELLERPRO - LIVE DEPLOYMENT GUIDE
-## Deploy to Production URL in 5 Minutes
+# ResellerPro deployment guide
 
----
+## Canonical production path
 
-## 🚀 OPTION 1: VERCEL DEPLOYMENT (RECOMMENDED - 5 MINUTES)
+ResellerPro uses the controlled release path:
 
-### Prerequisites
-- GitHub account
-- Vercel account (free at https://vercel.com)
+GitHub main → validation → ResellerPro release → Cloudflare Workers/OpenNext → smoke/health verification → evidence
 
-### Step-by-Step Deployment
+Vercel, Netlify and Railway are legacy documentation references and are not production authorities for this project.
 
-#### 1. Fork or Clone Repository
-```bash
-git clone https://github.com/Mind-Reply/resellerpro.git
-cd resellerpro
-```
+## Required release gates
 
-#### 2. Install Vercel CLI
-```bash
-npm install -g vercel
-```
+1. Validate TypeScript and Prisma.
+2. Build the production artifact.
+3. Confirm required runtime secrets exist in the deployment provider secret manager.
+4. Release through the approved ResellerPro/Cloudflare path.
+5. Run homepage, API health, asset, link and mobile smoke checks.
+6. Record runtime evidence before representing the deployment as LIVE.
+7. Keep registration, DNS, hosting and financial mutations fail-closed until their provider-specific evidence gates pass.
 
-#### 3. Login to Vercel
-```bash
-vercel login
-# Opens browser window - complete authentication
-```
+## Environment contract
 
-#### 4. Deploy to Vercel
-```bash
-# First deployment (links project)
-vercel
+Secrets must remain outside GitHub. Production configuration may require DATABASE_URL, NEXTAUTH_SECRET, provider credentials, Stripe webhook/payment credentials when commerce is explicitly enabled, and Cloudflare deployment credentials in approved secret storage.
 
-# Production deployment
-vercel --prod
-```
+Do not place secret values in source, client bundles, logs, screenshots or documentation.
 
-**Result:** Your app is now live at `https://resellerpro-[YOUR-NAME].vercel.app`
+## Verification
 
-#### 5. Add Custom Domain (Optional)
-In Vercel Dashboard:
-1. Go to your project → Settings → Domains
-2. Click "Add"
-3. Enter: `resellerpro.io` (or your chosen domain)
-4. Vercel shows nameservers - update at your registrar
+A successful GitHub build is not proof of a live deployment. Production evidence should identify the commit SHA, deployment identifier, canonical hostname, timestamp, HTTP status, health result, critical route checks, asset/error check and rollback reference.
 
-**Result:** App live at `https://resellerpro.io`
+## Rollback
 
----
+Rollback must target the last verified release, not merely the last successful build. Preserve evidence for both the failed release and recovery release.
 
-## 🚀 OPTION 2: NETLIFY DEPLOYMENT (ALTERNATIVE - 5 MINUTES)
+## Documentation rule
 
-### Step 1: Push to GitHub
-```bash
-git remote add origin https://github.com/YOUR-USERNAME/resellerpro.git
-git push -u origin main
-```
-
-### Step 2: Connect to Netlify
-1. Go to https://app.netlify.com
-2. Click "New site from Git"
-3. Select GitHub
-4. Choose `resellerpro` repository
-5. Click "Deploy"
-
-**Result:** Live at `https://resellerpro-[random].netlify.app`
-
-### Step 3: Add Custom Domain
-Netlify Dashboard → Domain Management → Add custom domain
-
----
-
-## 🚀 OPTION 3: AWS DEPLOYMENT (ENTERPRISE - 20 MINUTES)
-
-### Step 1: Prepare Build
-```bash
-npm run build
-```
-
-### Step 2: Push to AWS CodeCommit
-```bash
-git push codecommit main
-```
-
-### Step 3: Setup CodePipeline
-1. AWS Console → CodePipeline
-2. Create pipeline → Connect to CodeCommit
-3. Select build provider: CodeBuild
-4. Select deploy provider: S3 + CloudFront
-
-**Result:** Live on AWS CloudFront with custom domain
-
----
-
-## 🚀 OPTION 4: DOCKER + RAILWAY DEPLOYMENT (5 MINUTES)
-
-### Step 1: Login to Railway
-```bash
-npm install -g @railway/cli
-railway login
-```
-
-### Step 2: Deploy
-```bash
-railway up
-```
-
-**Result:** Live on Railway with auto-generated URL
-
----
-
-## 📋 PRODUCTION CHECKLIST
-
-### Before Going Live
-
-- [ ] **Environment Variables Set**
-  ```bash
-  DATABASE_URL=postgresql://...
-  REDIS_URL=redis://...
-  NEXT_PUBLIC_APP_URL=https://resellerpro.io
-  STRIPE_SECRET_KEY=sk_live_...
-  ```
-
-- [ ] **Database Setup**
-  ```bash
-  pnpm prisma migrate deploy
-  pnpm prisma db seed
-  ```
-
-- [ ] **Build Test**
-  ```bash
-  pnpm build
-  pnpm start
-  ```
-
-- [ ] **SSL/TLS Certificate**
-  - Vercel: Automatic ✅
-  - Netlify: Automatic ✅
-  - AWS: AWS Certificate Manager ✅
-
-- [ ] **DNS Configured**
-  - Add A records pointing to your CDN
-  - Add MX records for email (if needed)
-
-- [ ] **Monitoring Setup**
-  - Uptime monitoring enabled
-  - Error tracking (Sentry)
-  - Analytics (Google Analytics)
-
-- [ ] **Security Configured**
-  - CORS headers set
-  - Rate limiting enabled
-  - Input validation active
-
-### After Going Live
-
-- [ ] **Google Search Console**
-  1. Go to https://search.google.com/search-console
-  2. Add property: resellerpro.io
-  3. Verify via DNS
-  4. Submit sitemap: /sitemap.xml
-
-- [ ] **Google Analytics**
-  1. Create GA4 property
-  2. Add tracking code to site
-  3. Verify data collection
-
-- [ ] **Monitoring Services**
-  1. Setup uptime monitoring
-  2. Enable error tracking
-  3. Configure alerts
-
-- [ ] **Performance Testing**
-  1. Test with PageSpeed Insights
-  2. Run Lighthouse audit
-  3. Check Core Web Vitals
-
----
-
-## 🌐 LIVE URL EXAMPLES
-
-After deployment, your RessellerPro will be accessible at:
-
-### Vercel
-```
-https://resellerpro-[username].vercel.app (auto)
-https://resellerpro.io (custom domain)
-```
-
-### Netlify
-```
-https://resellerpro-[random].netlify.app (auto)
-https://resellerpro.io (custom domain)
-```
-
-### AWS
-```
-https://d123abc.cloudfront.net (CloudFront)
-https://resellerpro.io (custom domain)
-```
-
----
-
-## ✅ VERIFY DEPLOYMENT
-
-### Test Your Live Site
-
-```bash
-# 1. Check homepage loads
-curl https://resellerpro.io
-
-# 2. Check API endpoint
-curl https://resellerpro.io/api/health
-
-# 3. Check database connection
-curl https://resellerpro.io/api/db-status
-
-# 4. Check performance
-curl -I https://resellerpro.io
-# Look for: Cache-Control, X-Response-Time headers
-```
-
-### Browser Testing
-
-1. Open https://resellerpro.io in browser
-2. Check hero section loads with animations
-3. Test AI chat widget
-4. Check mobile responsiveness
-5. Verify all links work
-
----
-
-## 📊 DEPLOYMENT COMPARISON
-
-| Platform | Time | Cost | Uptime | Notes |
-|----------|------|------|--------|-------|
-| **Vercel** | 5 min | $20-50/mo | 99.99% | Recommended |
-| **Netlify** | 5 min | $19-99/mo | 99.99% | Great alternative |
-| **AWS** | 20 min | $50-200/mo | 99.99% | Enterprise |
-| **Railway** | 5 min | $5-65/mo | 99.95% | Budget-friendly |
-| **DigitalOcean** | 10 min | $12-50/mo | 99.95% | Simple setup |
-
----
-
-## 🔐 PRODUCTION SECURITY
-
-### Essential Security Headers
-```nginx
-X-Content-Type-Options: nosniff
-X-Frame-Options: DENY
-X-XSS-Protection: 1; mode=block
-Strict-Transport-Security: max-age=31536000
-Content-Security-Policy: default-src 'self'
-```
-
-### Rate Limiting
-```typescript
-// Implement rate limiting
-import rateLimit from 'express-rate-limit';
-
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100 // Limit each IP to 100 requests per windowMs
-});
-
-app.use('/api/', limiter);
-```
-
-### Environment Variables
-```bash
-# Never expose these:
-STRIPE_SECRET_KEY
-DATABASE_PASSWORD
-JWT_SECRET
-API_KEYS
-```
-
----
-
-## 📈 POST-DEPLOYMENT MONITORING
-
-### Key Metrics to Monitor
-- Uptime: Should be 99.99%+
-- Response time: Should be <200ms
-- Error rate: Should be <0.1%
-- CPU usage: Should be <70%
-- Memory usage: Should be <80%
-
-### Tools to Use
-- **Uptime Monitoring:** UptimeRobot, StatusCake
-- **Error Tracking:** Sentry, Rollbar
-- **Analytics:** Google Analytics, Mixpanel
-- **Performance:** DataDog, New Relic
-
----
-
-## 🎯 NEXT STEPS
-
-1. **Choose deployment platform** (Vercel recommended)
-2. **Follow the steps above**
-3. **Setup custom domain**
-4. **Configure monitoring**
-5. **Submit to Google**
-6. **Monitor performance**
-7. **Scale as needed**
-
----
-
-## 💬 SUPPORT
-
-Need help?
-- Vercel Docs: https://vercel.com/docs
-- Netlify Docs: https://docs.netlify.com
-- AWS Docs: https://docs.aws.amazon.com
-- RessellerPro GitHub: https://github.com/Mind-Reply/resellerpro
-
----
-
-**RessellerPro is now LIVE and accessible to the world!** 🌍✨
-
+Older documents that say ResellerPro is LIVE, recommend Vercel, or supply example production URLs are historical until reconciled with current runtime evidence.
