@@ -1,0 +1,24 @@
+name = "resellerpro"
+main = ".open-next/worker.js"
+compatibility_date = "2026-09-20"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = ".open-next/assets"
+binding = "ASSETS"
+
+[observability]
+enabled = true
+
+[vars]
+RESELLERPRO_MODE = "controlled"
+NEXT_TELEMETRY_DISABLED = "1"
+
+# Secrets are configured outside source control:
+# DATABASE_URL
+# STRIPE_SECRET_KEY
+# STRIPE_WEBHOOK_SECRET
+# OPENPROVIDER_USERNAME
+# OPENPROVIDER_PASSWORD
+# NEXT_PUBLIC_APP_URL
+# NEXTAUTH_SECRET
