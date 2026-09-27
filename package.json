@@ -47,7 +47,8 @@
     "whois-json": "^2.0.0",
     "zod": "^3.22.0",
     "zustand": "^4.4.0",
-    "framer-motion": "^13.4.4"
+    "framer-motion": "^13.4.4",
+    "@opennextjs/cloudflare": "1.20.6"
   },
   "devDependencies": {
     "@playwright/test": "^1.52.0",
