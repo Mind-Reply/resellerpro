@@ -69,13 +69,13 @@ export default function Home() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#070809] text-[#eceae4]">
+    <main className="min-h-screen bg-[#070809] text-[#f3f4f6]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <header className="sticky top-0 z-50 border-b border-white/10 bg-[#070809]/90 backdrop-blur-xl">
         <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-4 md:px-10">
           <Link href="/" className="flex items-center gap-3" aria-label="ResellerPro home">
-            <span className="grid h-9 w-9 place-items-center bg-[#eceae4] font-mono text-xs font-black text-[#070809]">RP</span>
+            <span className="grid h-9 w-9 place-items-center bg-[#f3f4f6] font-mono text-xs font-black text-[#070809]">RP</span>
             <span className="text-[15px] font-semibold tracking-[-0.02em]">ResellerPro</span>
           </Link>
           <nav className="hidden gap-7 text-xs font-medium text-white/55 md:flex">
@@ -91,7 +91,7 @@ export default function Home() {
       <section id="platform" className="mx-auto max-w-[1440px] px-5 pb-24 pt-20 md:px-10 md:pb-32 md:pt-28">
         <div className="grid gap-14 lg:grid-cols-[1.15fr_.85fr] lg:items-end">
           <div>
-            <p className="mb-7 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-[#c8ff3d]">ResellerPro / infrastructure control</p>
+            <p className="mb-7 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-[#4169ff]">ResellerPro / infrastructure control</p>
             <h1 className="max-w-6xl text-[clamp(3.6rem,8vw,8rem)] font-semibold leading-[0.84] tracking-[-0.08em]">
               Deployment control with proof built in.
             </h1>
@@ -99,7 +99,7 @@ export default function Home() {
               ResellerPro connects source, build, preview, approval, provider execution, runtime verification and release evidence in one controlled surface.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
-              <a href="#answers" className="bg-[#c8ff3d] px-6 py-3.5 text-sm font-bold text-[#070809]">Read the system</a>
+              <a href="#answers" className="bg-[#4169ff] px-6 py-3.5 text-sm font-bold text-[#070809]">Read the system</a>
               <a href="#architecture" className="border border-white/20 px-6 py-3.5 text-sm font-semibold hover:border-white/50">Inspect architecture</a>
             </div>
           </div>
@@ -107,12 +107,12 @@ export default function Home() {
           <div className="border border-white/10 bg-[#0d0f10] p-5">
             <div className="mb-5 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.18em]">
               <span className="text-white/40">Integrity rail</span>
-              <span className="text-[#c8ff3d]">evidence-first</span>
+              <span className="text-[#4169ff]">evidence-first</span>
             </div>
             <div className="grid grid-cols-2 gap-px bg-white/10 sm:grid-cols-4">
               {integrity.slice(0, 4).map((state) => (
                 <div key={state} className="bg-[#101213] p-5">
-                  <div className="h-1.5 w-1.5 bg-[#c8ff3d]" />
+                  <div className="h-1.5 w-1.5 bg-[#4169ff]" />
                   <div className="mt-10 font-mono text-[10px] font-bold tracking-[0.14em]">{state}</div>
                 </div>
               ))}
@@ -129,7 +129,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="answers" className="border-y border-white/10 bg-[#eceae4] text-[#10110f]">
+      <section id="answers" className="border-y border-white/10 bg-[#f3f4f6] text-[#10110f]">
         <div className="mx-auto max-w-[1440px] px-5 py-24 md:px-10 md:py-32">
           <div className="mb-14 max-w-3xl">
             <p className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-black/45">Answer-first islands</p>
@@ -137,7 +137,7 @@ export default function Home() {
           </div>
           <div className="grid gap-px border border-black/10 bg-black/10 lg:grid-cols-2">
             {answers.map((answer) => (
-              <article key={answer.title} className="bg-[#eceae4] p-7 md:p-10">
+              <article key={answer.title} className="bg-[#f3f4f6] p-7 md:p-10">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-black/40">Answer island</span>
                   <span className="h-2 w-2 bg-[#4169ff]" />
@@ -153,7 +153,7 @@ export default function Home() {
       <section id="architecture" className="mx-auto max-w-[1440px] px-5 py-24 md:px-10 md:py-32">
         <div className="grid gap-14 lg:grid-cols-[.72fr_1.28fr]">
           <div>
-            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-[#c8ff3d]">Visual-first architecture</p>
+            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-[#4169ff]">Visual-first architecture</p>
             <h2 className="mt-4 text-5xl font-semibold leading-[0.92] tracking-[-0.06em] md:text-6xl">A system map people can read at a glance.</h2>
             <p className="mt-7 max-w-md text-sm leading-7 text-white/55">
               The visual layer mirrors the operating model: capabilities, states, evidence and release boundaries remain distinct and scannable.
@@ -169,7 +169,7 @@ export default function Home() {
               ].map(([n, title, detail]) => (
                 <div key={n} className="bg-[#101213] p-7 md:p-8">
                   <span className="font-mono text-[10px] text-white/35">{n}</span>
-                  <h3 className="mt-12 font-mono text-xs font-bold tracking-[0.18em] text-[#c8ff3d]">{title}</h3>
+                  <h3 className="mt-12 font-mono text-xs font-bold tracking-[0.18em] text-[#4169ff]">{title}</h3>
                   <p className="mt-3 text-sm leading-6 text-white/55">{detail}</p>
                 </div>
               ))}
@@ -178,7 +178,7 @@ export default function Home() {
             <div className="border-t border-white/10 p-7 md:p-8">
               <div className="mb-5 flex items-center justify-between">
                 <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/35">Execution graph</span>
-                <span className="font-mono text-[10px] text-[#c8ff3d]">READ → VERIFY → PROVE</span>
+                <span className="font-mono text-[10px] text-[#4169ff]">READ → VERIFY → PROVE</span>
               </div>
               <div className="grid gap-2 sm:grid-cols-7">
                 {release.map(([n, name]) => (
@@ -196,7 +196,7 @@ export default function Home() {
                   <summary className="cursor-pointer list-none">
                     <span className="font-mono text-[10px] text-white/30">{n}</span>
                     <h3 className="mt-8 text-xl font-semibold">{title}</h3>
-                    <span className="mt-3 block font-mono text-[9px] uppercase tracking-[0.14em] text-[#c8ff3d]">Open module +</span>
+                    <span className="mt-3 block font-mono text-[9px] uppercase tracking-[0.14em] text-[#4169ff]">Open module +</span>
                   </summary>
                   <p className="mt-5 text-sm leading-6 text-white/55">{body}</p>
                 </details>
