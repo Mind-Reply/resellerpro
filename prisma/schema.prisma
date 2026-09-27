@@ -24,6 +24,8 @@ model Workspace {
   webhookEvents WebhookEvent[]
   carts        Cart[]
   acquisitionEvents AcquisitionEvent[]
+  subscriptions Subscription[]
+  transactions Transaction[]
 }
 
 model Customer {
@@ -45,6 +47,8 @@ model Customer {
   tickets        SupportTicket[]
   consents        Consent[]
   carts           Cart[]
+  subscriptions   Subscription[]
+  transactions    Transaction[]
 
   @@unique([workspaceId, email])
   @@index([email])
@@ -373,4 +377,52 @@ model DiagnosticSubmission {
   @@index([status, createdAt])
   @@index([email])
   @@index([region, constraint])
+}
+
+
+model Subscription {
+  id                  String   @id @default(cuid())
+  workspaceId         String
+  customerId          String
+  planId              String
+  status              String   @default("incomplete")
+  stripeCustomerId    String?  @unique
+  stripeSubscriptionId String? @unique
+  currentPeriodStart  DateTime?
+  currentPeriodEnd    DateTime?
+  cancelAtPeriodEnd   Boolean  @default(false)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  workspace           Workspace @relation(fields: [workspaceId], references: [id])
+  customer            Customer  @relation(fields: [customerId], references: [id])
+  transactions        Transaction[]
+
+  @@index([workspaceId, status])
+  @@index([customerId, status])
+}
+
+model Transaction {
+  id                       String   @id @default(cuid())
+  workspaceId              String
+  customerId              String
+  subscriptionId           String?
+  stripeCheckoutSessionId  String?  @unique
+  stripePaymentIntentId   String?  @unique
+  stripeInvoiceId         String?  @unique
+  stripeCustomerId        String?
+  stripeSubscriptionId    String?
+  type                     String
+  description              String
+  amount                   Decimal  @db.Decimal(18, 4)
+  currency                 String   @default("USD")
+  status                   String   @default("pending")
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  workspace                Workspace @relation(fields: [workspaceId], references: [id])
+  customer                 Customer @relation(fields: [customerId], references: [id])
+  subscription             Subscription? @relation(fields: [subscriptionId], references: [id])
+
+  @@index([workspaceId, createdAt])
+  @@index([customerId, createdAt])
+  @@index([subscriptionId, createdAt])
 }
