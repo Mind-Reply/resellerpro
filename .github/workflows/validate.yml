@@ -27,6 +27,8 @@ jobs:
       - name: Type check
         run: npm run type-check
       - name: Prisma validation
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/resellerpro_ci
         run: npx prisma validate
       - name: Production build
         run: npm run build
