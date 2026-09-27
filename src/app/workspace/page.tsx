@@ -3,13 +3,40 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 
-const nav = ["Overview", "Apps", "Websites", "Agents", "Domains", "Commerce", "Operations", "Growth", "Integrations", "Settings"];
+const nav = ["Overview", "Analytics", "Billing", "Account", "Apps", "Websites", "Agents", "Domains", "Commerce", "Operations", "Growth", "Integrations", "Settings"];
+
+const pageLinks: Record<string, string> = {
+  Analytics: "/workspace/analytics",
+  Billing: "/workspace/billing",
+  Account: "/workspace/account",
+};
+
 const cards = {
   Overview: [
     ["Workspace", "One place for creation, deployment and operation.", "READY"],
+    ["Business intelligence", "Persisted commerce, customer, service and acquisition signals.", "READY"],
+    ["Account & billing", "Subscriptions, checkout and transactions live behind the account boundary.", "READY"],
     ["Release rail", "Source → Build → Approve → Execute → Verify → Record.", "GOVERNED"],
     ["Evidence", "Attach proof to material outcomes before they become claims.", "TRACEABLE"],
     ["Provider layer", "Adapters remain replaceable behind the product contract.", "NEUTRAL"],
+  ],
+  Analytics: [
+    ["Revenue", "Persisted paid invoice and order signals, never invented telemetry.", "READY"],
+    ["Customers", "Workspace-scoped customer counts and activity.", "READY"],
+    ["Acquisition", "Campaign, source and event evidence from persisted records.", "READY"],
+    ["Operations", "Services, domains and invoices connected to the same workspace.", "READY"],
+  ],
+  Billing: [
+    ["Plans", "Provider-backed commercial plan catalog.", "READY"],
+    ["Checkout", "Stripe subscription checkout remains fail-closed until configured.", "GATED"],
+    ["Subscription", "Current account subscription is read from persisted state.", "READY"],
+    ["Transactions", "Checkout and invoice history are recorded per customer.", "READY"],
+  ],
+  Account: [
+    ["Identity", "Secure HTTP-only account sessions.", "READY"],
+    ["Workspace", "Each customer session is bound to one workspace.", "READY"],
+    ["Sign in", "Email/password account access with server-side verification.", "READY"],
+    ["Sign out", "Server-side cookie invalidation, no localStorage token.", "READY"],
   ],
   Apps: [
     ["Create app", "Start a product surface with auth, data and release boundaries.", "READY"],
@@ -50,7 +77,7 @@ const cards = {
   Growth: [
     ["SEO / GEO", "Scan discoverability and prioritise concrete fixes.", "READY"],
     ["Social", "Prepare channel-specific content from approved source material.", "READY"],
-    ["Analytics", "Connect real events before displaying performance metrics.", "GATED"],
+    ["Analytics", "Use the persisted BI surface rather than invented metrics.", "READY"],
     ["Optimisation", "Turn observed friction into an actionable change.", "READY"],
   ],
   Integrations: [
@@ -70,17 +97,52 @@ const cards = {
 export default function Workspace() {
   const [active, setActive] = useState("Overview");
   const [query, setQuery] = useState("");
-  const rows = useMemo(() => cards[active as keyof typeof cards].filter((x) => x.join(" ").toLowerCase().includes(query.toLowerCase())), [active, query]);
+  const rows = useMemo(
+    () => cards[active as keyof typeof cards].filter((x) => x.join(" ").toLowerCase().includes(query.toLowerCase())),
+    [active, query],
+  );
 
   return (
     <main className="ws">
-      <header className="ws-top"><Link href="/" className="ws-brand"><span>RP</span> ResellerPro</Link><div className="ws-top-state"><i /> PLATFORM SURFACE / PREVIEW</div><Link href="/" className="ws-back">← Home</Link></header>
+      <header className="ws-top">
+        <Link href="/" className="ws-brand"><span>RP</span> ResellerPro</Link>
+        <div className="ws-top-state"><i /> PLATFORM SURFACE / CONTROLLED</div>
+        <Link href="/" className="ws-back">← Home</Link>
+      </header>
       <div className="ws-shell">
-        <aside className="ws-side"><small>WORKSPACE</small>{nav.map((item) => <button key={item} className={item === active ? "active" : ""} onClick={() => setActive(item)}>{item}</button>)}</aside>
+        <aside className="ws-side">
+          <small>WORKSPACE</small>
+          {nav.map((item) => (
+            <button key={item} className={item === active ? "active" : ""} onClick={() => setActive(item)}>{item}</button>
+          ))}
+        </aside>
         <section className="ws-main">
-          <div className="ws-heading"><div><p>RESELLERPRO / {active.toUpperCase()}</p><h1>{active === "Overview" ? "The operating surface." : active}</h1><span>State is explicit. Unverified capability stays gated.</span></div><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Filter modules" /></div>
-          <div className="ws-grid">{rows.map(([title, text, state]) => <article key={title}><div className="ws-card-top"><span>{state}</span><b>•••</b></div><h2>{title}</h2><p>{text}</p><button>Open surface →</button></article>)}</div>
-          <div className="ws-rail"><div><small>RELEASE RAIL</small><strong>Source</strong><strong>Build</strong><strong>Approve</strong><strong>Execute</strong><strong>Verify</strong><strong>Record</strong></div><p>Material execution is designed to stop at the right boundary rather than silently crossing it.</p></div>
+          <div className="ws-heading">
+            <div>
+              <p>RESELLERPRO / {active.toUpperCase()}</p>
+              <h1>{active === "Overview" ? "The operating surface." : active}</h1>
+              <span>State is explicit. Unverified capability stays gated.</span>
+            </div>
+            <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Filter modules" />
+          </div>
+          <div className="ws-grid">
+            {rows.map(([title, text, state]) => (
+              <article key={title}>
+                <div className="ws-card-top"><span>{state}</span><b>•••</b></div>
+                <h2>{title}</h2>
+                <p>{text}</p>
+                {pageLinks[active] ? (
+                  <Link href={pageLinks[active]} className="inline-block pt-3 text-sm font-medium">Open surface →</Link>
+                ) : (
+                  <button className="pt-3 text-left text-sm font-medium">Open surface →</button>
+                )}
+              </article>
+            ))}
+          </div>
+          <div className="ws-rail">
+            <div><small>RELEASE RAIL</small><strong>Source</strong><strong>Build</strong><strong>Approve</strong><strong>Execute</strong><strong>Verify</strong><strong>Record</strong></div>
+            <p>Material execution is designed to stop at the right boundary rather than silently crossing it.</p>
+          </div>
         </section>
       </div>
     </main>
