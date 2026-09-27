@@ -5,9 +5,6 @@ const nextConfig: NextConfig = {
   typescript: {
     tsconfigPath: './tsconfig.json',
   },
-  eslint: {
-    dirs: ['src', 'pages', 'components', 'lib', 'utils'],
-  },
   images: {
     remotePatterns: [
       {
