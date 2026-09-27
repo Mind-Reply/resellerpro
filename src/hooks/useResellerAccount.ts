@@ -80,12 +80,19 @@ export function useSubscription() {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   const refresh = useCallback(async () => {
-    const [planResult, subscriptionResult] = await Promise.all([
-      request<{ plans: Plan[]; readiness: Record<string, unknown> }>("/api/billing/plans"),
-      request<{ subscription: any }>("/api/billing/subscription"),
-    ]);
-    setPlans(planResult.plans);
-    setSubscription(subscriptionResult.subscription);
+    try {
+      const planResult = await request<{ plans: Plan[] }>("/api/billing/plans");
+      setPlans(planResult.plans);
+    } catch {
+      setPlans([]);
+    }
+
+    try {
+      const subscriptionResult = await request<{ subscription: any }>("/api/billing/subscription");
+      setSubscription(subscriptionResult.subscription);
+    } catch {
+      setSubscription(null);
+    }
   }, []);
 
   useEffect(() => { void refresh(); }, [refresh]);
@@ -118,8 +125,12 @@ export function useTransactions() {
   const [offset, setOffset] = useState(0);
 
   const refetchTransactions = useCallback(async () => {
-    const result = await request<{ transactions: any[] }>("/api/transactions?offset=" + offset + "&limit=50");
-    setTransactions(result.transactions);
+    try {
+      const result = await request<{ transactions: any[] }>("/api/transactions?offset=" + offset + "&limit=50");
+      setTransactions(result.transactions);
+    } catch {
+      setTransactions([]);
+    }
   }, [offset]);
 
   useEffect(() => { void refetchTransactions(); }, [refetchTransactions]);
@@ -139,6 +150,8 @@ export function useAnalytics() {
     setLoading(true);
     try {
       setData(await request<any>("/api/analytics/summary"));
+    } catch {
+      setData(null);
     } finally {
       setLoading(false);
     }
