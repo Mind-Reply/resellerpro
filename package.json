@@ -1,13 +1,13 @@
 {
-  "name": "resellerpro-platform",
+  "name": "resellerpro",
   "version": "1.0.0",
-  "description": "A11-K ResellerPro — provider-neutral domain, commerce and sovereign control-plane platform.",
+  "description": "ResellerPro — A11-K provider-neutral domain, commerce and sovereign control-plane platform.",
   "private": true,
   "author": "A.K. / A11-K",
   "license": "UNLICENSED",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "type-check": "tsc --noEmit",
     "format": "prettier --write .",
@@ -24,6 +24,7 @@
     "@ai-sdk/gateway": "^4.0.70",
     "@anthropic-ai/sdk": "^0.116.0",
     "@google/generative-ai": "^0.24.1",
+    "@opennextjs/cloudflare": "1.20.6",
     "@prisma/client": "^5.22.0",
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
@@ -31,10 +32,8 @@
     "bcryptjs": "^2.4.3",
     "clsx": "^2.0.0",
     "date-fns": "^2.30.0",
-    "framer-motion": "^12.43.0",
     "lucide-react": "^1.31.0",
-    "next": "^16.3.6",
-    "next": "16.3.3",
+    "next": "16.3.0",
     "next-auth": "^4.24.0",
     "pg": "^8.11.0",
     "react": "^19.0.0",
@@ -48,9 +47,7 @@
     "typescript": "^5.3.0",
     "whois-json": "^2.0.0",
     "zod": "^3.22.0",
-    "zustand": "^4.4.0",
-    "framer-motion": "^13.4.4",
-    "@opennextjs/cloudflare": "1.20.6"
+    "zustand": "^4.4.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.52.0",
