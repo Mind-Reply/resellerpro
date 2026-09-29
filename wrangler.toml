@@ -1,3 +1,7 @@
+# Cloudflare Workers config for ResellerPro
+# Full-stack Next.js is deployed to Workers through the OpenNext adapter.
+# Current Cloudflare guidance uses Workers for full-stack Next.js.
+
 name = "resellerpro"
 main = ".open-next/worker.js"
 compatibility_date = "2026-09-20"
@@ -14,7 +18,7 @@ enabled = true
 RESELLERPRO_MODE = "controlled"
 NEXT_TELEMETRY_DISABLED = "1"
 
-# Secrets are configured outside source control:
+# Secrets (set in Cloudflare Workers > Settings > Variables and Secrets):
 # DATABASE_URL
 # STRIPE_SECRET_KEY
 # STRIPE_WEBHOOK_SECRET
