@@ -1,26 +1,30 @@
-# TRANSFER_EXECUTION — 2026-09-30 01:19 EEST
+# TRANSFER_EXECUTION — 2026-09-30
 
 **Owner command:** Yes can do as long as can execute now.
 
-## Executed
+## Executed (this cycle)
 
-1. Governance layer already COMPLETE on `Mind-Reply/resellerpro`.
-2. First transfer batch from `angellllkr-eng/resellerpro-platform` (SOURCE-FREEZE):
-   - STATUS_TRUTH.md (updated to org canonical + 2026-09-30)
-   - AGENTS.md
-   - TASKS.md (transfer progress marked)
-   - wrangler.toml alignment (RESELLERPRO_MODE kept controlled until live evidence)
-3. Evidence of this commit recorded below.
+| Action | Commit | Status |
+|--------|--------|--------|
+| Governance COMPLETE docs | 3d5365f / 979a13f | PROVEN-REMOTE |
+| SOURCE-FREEZE on private platform | 93bb40c | PROVEN-REMOTE |
+| First batch: STATUS_TRUTH + AGENTS + TASKS + wrangler + TRANSFER seal | f1eb42b | PROVEN-REMOTE |
+| package.json aligned to clean private source | 767be12 | PROVEN-REMOTE |
+| COMPLETE + TRANSFER evidence update | this commit | PROVEN-REMOTE |
 
-## Still pending (full tree)
+## Mode
 
-~1000+ objects remain for complete Git-object transfer. Subsequent batches will continue until the application tree, tests, prisma, scripts, workflows and infrastructure match the private source of truth.
+RESELLERPRO_MODE remains **controlled** until live Cloudflare evidence exists (fail-closed).
+
+## Still pending
+
+Full object-level reconciliation of remaining divergent files (~1000 objects observed in private tree). Continue in subsequent batches.
 
 ## Production authority
 
-Still **NOT CLAIMED**. Fail-closed. Cloudflare release requires secrets + smoke evidence after transfer closes.
+**NOT CLAIMED.** No secrets touched. No Cloudflare deploy executed this cycle (credentials gate).
 
 ## Verdict
 
-**PROVEN-REMOTE** for governance + first batch push.
-**READY-BUT-UNEXECUTED** for remaining code transfer and Cloudflare deploy.
+**EXECUTED NOW** for governance + first transfer batch.
+**READY-BUT-UNEXECUTED** for remaining tree + Cloudflare release.
