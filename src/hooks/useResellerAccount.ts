@@ -71,7 +71,7 @@ export function useAuth() {
     setUser(null);
   }, []);
 
-  return { token: null, user, login, register, logout, refresh, loading, isAuthenticated: Boolean(user) };
+  return { token: null, user, login, register, logout, refresh, loading, isLoading: loading, isAuthenticated: Boolean(user) };
 }
 
 export function useSubscription() {
