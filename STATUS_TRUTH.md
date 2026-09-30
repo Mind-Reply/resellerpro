@@ -1,5 +1,19 @@
 # TRUST STATE — VERIFIED DEPLOYMENT REALITY — 2026-09-30
 
+## Current release attempt — 2026-09-30
+
+The owner has explicitly authorized publication of the canonical ResellerPro platform.
+
+Release target:
+- Source: `Mind-Reply/resellerpro`
+- Branch: `main`
+- Runtime authority: Cloudflare Workers + OpenNext
+- Release workflow: `.github/workflows/deploy-cloudflare.yml`
+- Required sequence: validation → production release → runtime health verification → evidence
+- Publication request status: IN_PROGRESS / awaiting GitHub Actions + Cloudflare runtime evidence
+
+A repository push to `main` is the configured release trigger. This record is intentionally factual: publication is not represented as LIVE until the runtime health gate succeeds.
+
 ## Verified in repository
 
 - Next.js + TypeScript control plane: discovery, quote, checkout, workers, admin, hosting and monitoring.
@@ -30,7 +44,7 @@ Historical Vercel deployments may exist, but Vercel is **not** the active produc
 
 ## Release state
 
-**CODE: READY / DEPLOYMENT PATH: CONFIGURED / RUNTIME: pending_evidence / MUTATIONS: FAIL-CLOSED**
+**CODE: READY / DEPLOYMENT PATH: CONFIGURED / RELEASE: IN_PROGRESS / RUNTIME: pending_evidence / MUTATIONS: FAIL-CLOSED**
 
 A deployment being configured or previously marked READY does not prove current runtime health.
 
@@ -54,6 +68,6 @@ Secrets remain outside GitHub.
 - **APPROVED** — the owner explicitly permitted the next action.
 - **LIVE** — the change is active and independently checked.
 
-Current repository state is **CHECKING / UNPROVEN** for production runtime because the live Cloudflare deployment and canonical hostname have not been independently re-proven in this session.
+Current repository state is **CHECKING / UNPROVEN** for production runtime until the live Cloudflare deployment and canonical hostname are independently re-proven.
 
 Documentation does not override runtime proof.
