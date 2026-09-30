@@ -50,4 +50,4 @@ The experience is an enterprise commerce/control product for technical operators
 
 Repository state is not runtime proof. A deployment is only represented as live after URL/health verification and evidence recording.
 
-See `CANONICAL_POINTER.md`, `docs/UNIFIED_BI_PLATFORM.md`, and `docs/CANONICAL_MIGRATION.md`.
+See `CANONICAL_POINTER.md`, `docs/UNIFIED_BI_PLATFORM.md`, `docs/UNIFIED_PLATFORM_INTEGRATION.md`, and `docs/CANONICAL_MIGRATION.md`.
