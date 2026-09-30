@@ -4,96 +4,155 @@ Status: EXECUTION STANDARD
 
 ## Decision
 
-ResellerPro is released as its own platform first. Domain, commerce, BI, operations, deployment and regional capabilities are modules of that platform, not parallel products competing for the same control surface.
+ResellerPro is its own platform first. Its primary business is **domain infrastructure**: domain registration/renewal and hosting services operated through ResellerPro's own registrar and hosting-provider capabilities.
 
-The platform core owns identity, workspace boundaries, authorization, configuration, eventing, audit/evidence, provider adapters, billing abstraction, navigation, search, notifications and release-state semantics.
+Services, executions and deployments are first-class execution layers around that core—not the product identity.
 
-Modules consume those platform primitives.
+The platform therefore has one operating model:
 
-## Core versus modules
+**Domain → Provider → Service → Execution → Deployment → Runtime → Evidence**
 
-### Platform core
-- Workspace and customer identity
-- Session and authorization boundary
-- Role and permission model
-- Configuration and feature flags
-- Global search and command surface
-- Notifications and action center
-- Event/audit log
-- Evidence records and verification state
-- Provider connection registry
-- Billing abstraction and Stripe integration boundary
-- Job/execution state
-- Error/recovery model
-- Shared responsive UI system
-- Health and release gates
+The platform core owns identity, workspace boundaries, authorization, configuration, provider control, billing abstraction, eventing, audit/evidence, execution state, navigation, search, notifications and release-state semantics.
 
-### Commerce module
-- Products
+## Primary business surfaces
+
+### Domain
+The primary customer/business surface:
+- Domain search and availability
+- Registration
+- Renewal
+- Transfer
+- DNS
+- Nameservers
+- Domain lifecycle
+- Expiry and auto-renewal
+- Domain portfolio
+- Domain-level billing and service state
+
+### Provider
+The underlying first-party infrastructure capability:
+- Registrar operations
+- Hosting accounts and plans
+- DNS infrastructure
+- Nameserver infrastructure
+- Hosting resources
+- Provisioning
+- Resource lifecycle
+- Provider credentials and connection references
+- Provider health and capacity
+- Provider-level audit/evidence
+
+Provider state must be authoritative for infrastructure state. Secrets themselves are never exposed in the UI or persisted as displayable values.
+
+## Execution graph
+
+The product should model operations as a graph rather than unrelated screens:
+
+**Domain**
+→ **Provider**
+→ **Service**
+→ **Execution**
+→ **Deployment**
+→ **Runtime state**
+→ **Evidence**
+
+A domain can have multiple services. A service can have multiple executions. An execution can produce one or more deployments. Deployments expose runtime observations. Evidence records the source and verification of each important state.
+
+This graph becomes the backbone for BI, operations and customer support.
+
+## Services
+
+Services represent what ResellerPro operates for a customer or workspace, for example:
+- Domain registration
+- Domain renewal
+- DNS
+- Hosting
+- SSL
+- Email
+- Managed application/service
+- Other approved infrastructure products
+
+A service is a durable business object. It should not be confused with an individual execution or deployment.
+
+## Executions
+
+Executions represent actions performed against a service/provider:
+- Register domain
+- Renew domain
+- Provision hosting
+- Configure DNS
+- Issue/renew certificate
+- Deploy application
+- Scale resource
+- Suspend/resume service
+- Recover failed operation
+
+Executions require idempotency, authorization, status, attempts, timestamps, provider references and auditable outcomes.
+
+## Deployments
+
+Deployments represent released infrastructure/application state:
+- Target
+- Environment
+- Version/build
+- Provider resource
+- Release status
+- Health checks
+- Rollback/recovery state
+- Evidence
+
+A deployment is not equivalent to an execution. An execution is an action; a deployment is the resulting released state.
+
+## Commerce and billing
+
+Commerce supports the domain/provider business:
+- Products and plans
 - Quotes
 - Cart
 - Orders
 - Invoices
+- Subscriptions
 - Refund/settlement state
 - Checkout
 
-### Domain module
+Stripe remains the financial system of record for Stripe-owned payment objects. ResellerPro owns product/workspace workflow, domain/service state, execution state and evidence.
+
+Stripe webhooks must be signature-verified, idempotent and auditable. A webhook receipt is not proof that a domain/service operation completed.
+
+Stripe Connect remains deferred unless the business model becomes a two-sided payment platform.
+
+## BI
+
+BI sits above the graph and reports only observed state:
 - Domain portfolio
-- Availability/quotes
-- Registration and renewal operations
-- DNS
-- Provider state
-- Expiry and transfer workflows
-
-### Operations module
-- Services
-- Deployments
-- Environments
-- Jobs
-- Runtime checks
-- Incident/recovery workflows
-
-### BI module
-- Revenue and billing analytics
-- Customer and lifecycle analytics
-- Acquisition analytics
-- Product/service performance
-- Operational health
+- Provider health
+- Service inventory
+- Execution success/failure
+- Deployment state
+- Revenue and billing
+- Customer lifecycle
+- Capacity and operational health
 - Evidence freshness
 
-### Regional module
-- Country/market configuration
-- Currency/tax/legal configuration
-- Localized catalog and language
+No synthetic KPI or simulated runtime state.
+
+## Regional expansion
+
+Country/market packs configure:
+- Currency
+- Tax/legal rules
+- Language
+- Product availability
 - Provider availability
-- Regional execution rules
+- Local execution rules
 
-## Stripe boundary
-
-Stripe is the financial system of record for Stripe-owned payment objects. ResellerPro remains the product system of record for workspace context, authorization, business workflow, operational state and evidence.
-
-ResellerPro must not duplicate Stripe as a second payment processor. It should persist only Stripe identifiers and business projections required for product workflows and reconciliation.
-
-Stripe webhooks are external events. Handlers must be signature-verified, idempotent and auditable. A webhook receipt is not by itself proof that a business workflow completed; resulting state must be reconciled.
-
-Stripe Billing/Checkout should power direct ResellerPro subscriptions and checkout where applicable. Stripe Connect is not part of the platform core unless ResellerPro later becomes a two-sided platform where customer businesses receive payments through ResellerPro.
-
-## Release sequence
-
-1. Platform kernel
-2. Identity/workspace/authorization
-3. Billing and commerce foundation
-4. Evidence/audit and event model
-5. Shared operator UX
-6. Domains
-7. Operations/deployments
-8. BI
-9. Regional packs
-10. Advanced provider orchestration
-
-Each stage must pass type-check, tests, build and applicable runtime verification before being called released.
+Regional configuration must not silently change the underlying domain/provider operating model.
 
 ## UX contract
+
+The primary navigation should make the operating model obvious:
+
+**Overview · Domains · Providers · Services · Executions · Deployments · Commerce · Analytics · Evidence · Settings**
 
 The first screen should answer:
 - Where am I?
@@ -102,16 +161,21 @@ The first screen should answer:
 - What can I do next?
 - What evidence supports the state?
 
-Mobile is a first-class operator surface, not a compressed desktop dashboard.
+Mobile is a first-class operator surface.
 
 ## Truth contract
 
-Never show a synthetic KPI, fake runtime state, fabricated provider health, invented revenue or unverified deployment as live.
+Never show synthetic revenue, fake provider health, fabricated domain availability, invented runtime state or unverified deployment as live.
 
-Every operationally important state has source, observedAt, verification method, scope and limitation.
+Every important operational state has:
+- source
+- observedAt
+- verification method
+- scope
+- limitation
 
 ## Platform-ready gate
 
-ResellerPro is platform-ready only when a new module can be added without creating a parallel identity model, billing model, audit model, provider registry, navigation system or evidence system.
+ResellerPro is platform-ready when a new domain/provider service can be added without creating a parallel identity model, billing model, provider model, execution model, deployment model, navigation system or evidence system.
 
-That is the architecture gate for every subsequent module.
+That is the architecture gate for every subsequent capability.
