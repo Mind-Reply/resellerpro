@@ -1,93 +1,19 @@
 import Link from "next/link";
 
 const families = [
-  {
-    id: "intelligence",
-    number: "01",
-    title: "Innovation & Intelligence",
-    intro: "Turn operational data into clearer decisions, predictive signals and bounded workflow improvements.",
-    services: [
-      ["Applied AI & Machine Learning", "Predictive models, classification, retrieval and decision-support workflows built around governed data."],
-      ["Data & Analytics", "Data architecture, operational reporting and decision surfaces connected to real business records."],
-    ],
-  },
-  {
-    id: "technology",
-    number: "02",
-    title: "Core Technology & Development",
-    intro: "Modernize the infrastructure and applications underneath the business without losing operational control.",
-    services: [
-      ["Infrastructure Modernization", "Cloud and hybrid architecture, migration planning, resilience and cost-aware infrastructure operations."],
-      ["Application Modernization", "Modern application architecture, integration, APIs, delivery pipelines and cloud-native development."],
-    ],
-  },
-  {
-    id: "operations",
-    number: "03",
-    title: "Operations, Security & People",
-    intro: "Keep critical technology secure, maintained and usable by the people who depend on it.",
-    services: [
-      ["Security", "Security posture, identity, monitoring, threat-informed controls and practical resilience engineering."],
-      ["Managed Services", "Ongoing infrastructure and application monitoring, maintenance, optimization and operational response."],
-      ["Digital Workplace", "Modern collaboration, identity, device and connectivity foundations for distributed teams."],
-      ["Training", "Role-specific enablement that helps teams operate the technology they actually adopt."],
-    ],
-  },
+  { id:"intelligence", number:"01", title:"Innovation & Intelligence", intro:"Turn operational data into clearer decisions, predictive signals and bounded workflow improvements.", services:[["Applied AI & Machine Learning","Predictive models, classification, retrieval and decision-support workflows built around governed data."],["Data & Analytics","Data architecture, operational reporting and decision surfaces connected to real business records."]] },
+  { id:"technology", number:"02", title:"Core Technology & Development", intro:"Modernize the infrastructure and applications underneath the business without losing operational control.", services:[["Infrastructure Modernization","Cloud and hybrid architecture, migration planning, resilience and cost-aware infrastructure operations."],["Application Modernization","Modern application architecture, integration, APIs, delivery pipelines and cloud-native development."]] },
+  { id:"operations", number:"03", title:"Operations, Security & People", intro:"Keep critical technology secure, maintained and usable by the people who depend on it.", services:[["Security","Security posture, identity, monitoring, threat-informed controls and practical resilience engineering."],["Managed Services","Ongoing infrastructure and application monitoring, maintenance, optimization and operational response."],["Digital Workplace","Modern collaboration, identity, device and connectivity foundations for distributed teams."],["Training","Role-specific enablement that helps teams operate the technology they actually adopt."]] },
 ];
+const graph=["Domain","Provider","Service","Execution","Deployment","Runtime","Evidence"];
 
-const graph = ["Domain", "Provider", "Service", "Execution", "Deployment", "Runtime", "Evidence"];
-
-export default function ServicesPage() {
-  return (
-    <main className="svc-site">
-      <header className="svc-nav">
-        <Link href="/" className="svc-logo"><span>RP</span> ResellerPro</Link>
-        <nav><Link href="/">Platform</Link><Link href="/workspace">Workspace</Link><Link href="/services">Services</Link></nav>
-        <Link href="/workspace" className="svc-cta">Open workspace</Link>
-      </header>
-
-      <section className="svc-hero">
-        <div>
-          <p className="svc-kicker">RESELLERPRO / SERVICES</p>
-          <h1>Innovation on top of infrastructure you can actually operate.</h1>
-          <p>ResellerPro starts with domains, registrar/provider infrastructure and hosting. These services extend that foundation into data, applications, security and managed operations without creating a second operating model.</p>
-          <div className="svc-actions"><Link href="#catalog" className="svc-primary">Explore services</Link><Link href="/workspace" className="svc-secondary">Open workspace</Link></div>
-        </div>
-        <div className="svc-graph">
-          <small>OPERATING GRAPH</small>
-          {graph.map((item, i) => <div key={item}><span>0{i + 1}</span><strong>{item}</strong>{i < graph.length - 1 && <b>↓</b>}</div>)}
-        </div>
-      </section>
-
-      <section className="svc-proof">
-        <div><strong>01</strong><span>Infrastructure-first</span><p>Domains, hosting and provider state remain the foundation.</p></div>
-        <div><strong>02</strong><span>Evidence-led</span><p>Operational claims are separated from planned capability.</p></div>
-        <div><strong>03</strong><span>Regional-ready</span><p>BG and UK are designed as native market packs before wider expansion.</p></div>
-      </section>
-
-      <section id="catalog" className="svc-catalog">
-        <div className="svc-heading"><p className="svc-kicker">SERVICE CATALOG</p><h2>Build, modernize, secure and operate.</h2><p>Each service has a delivery path, provider dependencies and evidence boundary. Services can be productized, assessed or managed depending on how standardized the delivery becomes.</p></div>
-        <div className="svc-families">
-          {families.map((family) => <section className="svc-family" id={family.id} key={family.id}>
-            <div className="svc-family-head"><span>{family.number}</span><div><h3>{family.title}</h3><p>{family.intro}</p></div></div>
-            <div className="svc-cards">{family.services.map(([title, text]) => <article key={title}><small>{family.number}</small><h4>{title}</h4><p>{text}</p><Link href="/workspace">Assess / operate →</Link></article>)}</div>
-          </section>)}
-        </div>
-      </section>
-
-      <section className="svc-delivery">
-        <div><p className="svc-kicker">DELIVERY MODEL</p><h2>No brochureware. Every service needs an operating path.</h2></div>
-        <div className="svc-delivery-list">
-          {["Assess", "Design", "Build", "Operate", "Verify"].map((x, i) => <div key={x}><span>0{i + 1}</span><strong>{x}</strong><p>{i === 0 ? "Scope the actual customer problem, infrastructure and constraints." : i === 1 ? "Define architecture, dependencies, security and regional requirements." : i === 2 ? "Create the implementation, integrations and release candidate." : i === 3 ? "Run the approved service with explicit ownership and monitoring." : "Verify runtime outcome and attach evidence before calling it complete."}</p></div>)}
-        </div>
-      </section>
-
-      <section className="svc-regions">
-        <p className="svc-kicker">REGIONAL FOUNDATION</p><h2>Native in Bulgaria and the UK first.</h2><p>BG and UK are the first complete market packs: language, currency, domain catalogue, provider capability, tax/legal presentation, checkout, support and operational evidence. Wider EU, Asia and Latin America follow only after the foundations are settled.</p>
-        <div><span>BG</span><span>UK</span><span>EU NEXT</span><span>ASIA / LATAM — RESEARCH GATED</span></div>
-      </section>
-
-      <section className="svc-final"><p className="svc-kicker">NEXT MOVE</p><h2>Start with the infrastructure. Add intelligence where it creates measurable value.</h2><div><Link href="/workspace" className="svc-primary">Open ResellerPro</Link><Link href="/" className="svc-secondary">Back to platform</Link></div></section>
-    </main>
-  );
-}
+export default function ServicesPage(){return <main className="svc-site">
+<style>{`*{box-sizing:border-box}.svc-site{min-height:100vh;background:radial-gradient(circle at 80% 0%,rgba(65,105,255,.16),transparent 30%),#070809;color:#f2f3f4;font-family:Inter,ui-sans-serif,system-ui,sans-serif}.svc-nav{height:76px;padding:0 5vw;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.1);position:sticky;top:0;z-index:20;background:rgba(7,8,9,.88);backdrop-filter:blur(16px)}.svc-logo{display:flex;align-items:center;gap:10px;font-weight:800}.svc-logo span{width:34px;height:34px;display:grid;place-items:center;background:#f2f3f4;color:#070809;font:800 10px ui-monospace,monospace}.svc-nav nav{display:flex;gap:28px;color:rgba(255,255,255,.48);font-size:13px}.svc-nav nav a:hover{color:#fff}.svc-cta,.svc-primary,.svc-secondary{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;font-size:12px;font-weight:750}.svc-cta,.svc-secondary{border:1px solid rgba(255,255,255,.18)}.svc-primary{background:#4169ff;color:#070809}.svc-hero{max-width:1440px;margin:auto;padding:100px 5vw 90px;display:grid;grid-template-columns:1.25fr .75fr;gap:80px;align-items:end}.svc-kicker{margin:0 0 18px;color:#6f8cff;font:700 10px ui-monospace,monospace;letter-spacing:.2em}.svc-hero h1{max-width:900px;margin:0;font-size:clamp(50px,7vw,102px);line-height:.88;letter-spacing:-.075em}.svc-hero>div>p:not(.svc-kicker){max-width:690px;margin:30px 0 0;color:rgba(255,255,255,.58);font-size:17px;line-height:1.7}.svc-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}.svc-graph{border:1px solid rgba(255,255,255,.12);background:#0d0f10;padding:22px}.svc-graph>small{color:rgba(255,255,255,.3);font:700 9px ui-monospace,monospace;letter-spacing:.15em}.svc-graph>div{display:grid;grid-template-columns:30px 1fr 20px;align-items:center;border-top:1px solid rgba(255,255,255,.08);padding:13px 0;margin-top:8px}.svc-graph span{color:#6f8cff;font:10px ui-monospace,monospace}.svc-graph strong{font-size:13px}.svc-graph b{color:rgba(255,255,255,.25);text-align:right}.svc-proof{display:grid;grid-template-columns:repeat(3,1fr);max-width:1440px;margin:auto;padding:0 5vw 100px;gap:1px;background:transparent}.svc-proof>div{background:#101213;border:1px solid rgba(255,255,255,.08);padding:25px;min-height:180px}.svc-proof strong{color:#6f8cff;font:700 10px ui-monospace,monospace}.svc-proof span{display:block;margin:45px 0 10px;font-size:18px;font-weight:750}.svc-proof p,.svc-heading>p:last-child,.svc-family-head p,.svc-cards p,.svc-delivery-list p,.svc-regions>p:not(.svc-kicker){margin:0;color:rgba(255,255,255,.44);font-size:13px;line-height:1.7}.svc-catalog{max-width:1440px;margin:auto;padding:110px 5vw}.svc-heading{max-width:1000px;margin-bottom:70px}.svc-heading h2,.svc-delivery h2,.svc-regions h2,.svc-final h2{margin:0;font-size:clamp(42px,5.5vw,78px);line-height:.9;letter-spacing:-.065em}.svc-heading>p:last-child{margin-top:25px;max-width:680px}.svc-family{border-top:1px solid rgba(255,255,255,.12);padding:45px 0 70px}.svc-family-head{display:grid;grid-template-columns:80px 1fr;gap:25px;margin-bottom:30px}.svc-family-head>span{color:#6f8cff;font:700 10px ui-monospace,monospace}.svc-family-head h3{margin:0 0 10px;font-size:30px;letter-spacing:-.045em}.svc-family-head p{max-width:620px}.svc-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,255,255,.1)}.svc-cards article{background:#0d0f10;padding:28px;min-height:230px}.svc-cards small{color:#6f8cff;font:700 9px ui-monospace,monospace}.svc-cards h4{margin:55px 0 12px;font-size:22px;letter-spacing:-.04em}.svc-cards a{display:block;margin-top:22px;color:#8ca2ff;font-size:11px;font-weight:750}.svc-delivery{padding:110px 5vw;background:#f1f0ec;color:#10110f;display:grid;grid-template-columns:.8fr 1.2fr;gap:80px}.svc-delivery .svc-kicker{color:#3654c8}.svc-delivery-list{border-top:1px solid rgba(16,17,15,.16)}.svc-delivery-list>div{display:grid;grid-template-columns:45px 110px 1fr;gap:15px;align-items:center;padding:18px 0;border-bottom:1px solid rgba(16,17,15,.16)}.svc-delivery-list span{color:#3654c8;font:10px ui-monospace,monospace}.svc-delivery-list strong{font-size:12px}.svc-delivery-list p{color:rgba(16,17,15,.58)}.svc-regions{max-width:1100px;margin:auto;padding:120px 5vw}.svc-regions h2{max-width:850px}.svc-regions>p:not(.svc-kicker){max-width:750px;margin:28px 0;color:rgba(255,255,255,.48);font-size:16px;line-height:1.75}.svc-regions>div{display:flex;flex-wrap:wrap;gap:8px}.svc-regions>div span{padding:9px 11px;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);font:700 9px ui-monospace,monospace}.svc-final{text-align:center;padding:120px 5vw;border-top:1px solid rgba(255,255,255,.1)}.svc-final h2{max-width:900px;margin:0 auto}.svc-final>div{display:flex;justify-content:center;gap:10px;margin-top:30px}@media(max-width:900px){.svc-hero,.svc-delivery{grid-template-columns:1fr}.svc-proof{grid-template-columns:1fr}.svc-nav nav{display:none}.svc-cards{grid-template-columns:1fr}.svc-family-head{grid-template-columns:45px 1fr}}@media(max-width:620px){.svc-nav{height:64px}.svc-cta{display:none}.svc-hero{padding-top:65px}.svc-family-head{gap:10px}.svc-delivery-list>div{grid-template-columns:35px 80px 1fr}}`}</style>
+<header className="svc-nav"><Link href="/" className="svc-logo"><span>RP</span> ResellerPro</Link><nav><Link href="/">Platform</Link><Link href="/workspace">Workspace</Link><Link href="/services">Services</Link></nav><Link href="/workspace" className="svc-cta">Open workspace</Link></header>
+<section className="svc-hero"><div><p className="svc-kicker">RESELLERPRO / SERVICES</p><h1>Innovation on top of infrastructure you can actually operate.</h1><p>ResellerPro starts with domains, registrar/provider infrastructure and hosting. These services extend that foundation into data, applications, security and managed operations without creating a second operating model.</p><div className="svc-actions"><Link href="#catalog" className="svc-primary">Explore services</Link><Link href="/workspace" className="svc-secondary">Open workspace</Link></div></div><div className="svc-graph"><small>OPERATING GRAPH</small>{graph.map((item,i)=><div key={item}><span>0{i+1}</span><strong>{item}</strong>{i<graph.length-1&&<b>↓</b>}</div>)}</div></section>
+<section className="svc-proof"><div><strong>01</strong><span>Infrastructure-first</span><p>Domains, hosting and provider state remain the foundation.</p></div><div><strong>02</strong><span>Evidence-led</span><p>Operational claims are separated from planned capability.</p></div><div><strong>03</strong><span>Regional-ready</span><p>BG and UK are designed as native market packs before wider expansion.</p></div></section>
+<section id="catalog" className="svc-catalog"><div className="svc-heading"><p className="svc-kicker">SERVICE CATALOG</p><h2>Build, modernize, secure and operate.</h2><p>Each service has a delivery path, provider dependencies and evidence boundary. Services can be productized, assessed or managed depending on how standardized the delivery becomes.</p></div><div>{families.map(f=><section className="svc-family" id={f.id} key={f.id}><div className="svc-family-head"><span>{f.number}</span><div><h3>{f.title}</h3><p>{f.intro}</p></div></div><div className="svc-cards">{f.services.map(([title,text])=><article key={title}><small>{f.number}</small><h4>{title}</h4><p>{text}</p><Link href="/workspace">Assess / operate →</Link></article>)}</div></section>)}</div></section>
+<section className="svc-delivery"><div><p className="svc-kicker">DELIVERY MODEL</p><h2>No brochureware. Every service needs an operating path.</h2></div><div className="svc-delivery-list">{["Assess","Design","Build","Operate","Verify"].map((x,i)=><div key={x}><span>0{i+1}</span><strong>{x}</strong><p>{i===0?"Scope the actual customer problem, infrastructure and constraints.":i===1?"Define architecture, dependencies, security and regional requirements.":i===2?"Create the implementation, integrations and release candidate.":i===3?"Run the approved service with explicit ownership and monitoring.":"Verify runtime outcome and attach evidence before calling it complete."}</p></div>)}</div></section>
+<section className="svc-regions"><p className="svc-kicker">REGIONAL FOUNDATION</p><h2>Native in Bulgaria and the UK first.</h2><p>BG and UK are the first complete market packs: language, currency, domain catalogue, provider capability, tax/legal presentation, checkout, support and operational evidence. Wider EU, Asia and Latin America follow only after the foundations are settled.</p><div><span>BG</span><span>UK</span><span>EU NEXT</span><span>ASIA / LATAM — RESEARCH GATED</span></div></section>
+<section className="svc-final"><p className="svc-kicker">NEXT MOVE</p><h2>Start with the infrastructure. Add intelligence where it creates measurable value.</h2><div><Link href="/workspace" className="svc-primary">Open ResellerPro</Link><Link href="/" className="svc-secondary">Back to platform</Link></div></section>
+</main>}
