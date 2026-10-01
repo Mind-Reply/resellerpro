@@ -1,101 +1,23 @@
 import Link from "next/link";
 
 const modules = [
-  { id: "01", title: "Apps", text: "Create operational products with a governed workspace, data model and release path." },
-  { id: "02", title: "Websites", text: "Design responsive customer experiences, connect domains and keep the release state visible." },
-  { id: "03", title: "Agents", text: "Prepare bounded operators that connect to approved tools and stop at explicit control points." },
-  { id: "04", title: "Domains", text: "Search, organise and route domain assets through provider-neutral contracts." },
-  { id: "05", title: "Commerce", text: "Keep quotes, checkout, orders and settlement evidence in one commercial flow." },
-  { id: "06", title: "Operations", text: "Watch deployments, health, renewals, workflows and evidence from one cockpit." },
+  { id: "01", title: "Domains", text: "Search, register, renew and operate domain assets through the platform provider graph." },
+  { id: "02", title: "Hosting", text: "Provision and manage hosting resources with service, execution and runtime state attached." },
+  { id: "03", title: "Services", text: "Extend the infrastructure foundation into security, data, applications, workplace and training." },
+  { id: "04", title: "Deployments", text: "Move approved builds into released infrastructure with health and rollback evidence." },
+  { id: "05", title: "Commerce", text: "Keep quotes, checkout, orders, subscriptions and settlement evidence in one flow." },
+  { id: "06", title: "Operations", text: "Watch providers, services, executions, deployments and evidence from one cockpit." },
 ];
+const growth=[["01","Discover","SEO/GEO readiness, structured content and search visibility controls."],["02","Engage","Customer journeys and commercial entry points prepared from the workspace."],["03","Measure","Acquisition, conversion, service and portfolio signals without invented numbers."],["04","Improve","Turn observed friction into a concrete next action, owner decision or verified change."]];
+const control=[["Source","Repository and change are explicit."],["Build","A candidate artifact is produced before release."],["Approve","Material actions require an explicit decision."],["Execute","Provider adapters perform the approved operation."],["Verify","Runtime state is checked independently."],["Record","Evidence stays attached to the outcome."]];
 
-const growth = [
-  ["01", "Discover", "SEO/GEO readiness, structured content and search visibility controls."],
-  ["02", "Engage", "Campaign drafts, social content and customer journeys prepared from the workspace."],
-  ["03", "Measure", "Acquisition, conversion, service and portfolio signals without invented numbers."],
-  ["04", "Improve", "Turn observed friction into a concrete next action, owner decision or verified change."],
-];
-
-const control = [
-  ["Source", "Repository and change are explicit."],
-  ["Build", "A candidate artifact is produced before release."],
-  ["Approve", "Material actions require an explicit decision."],
-  ["Execute", "Provider adapters perform the approved operation."],
-  ["Verify", "Runtime state is checked independently."],
-  ["Record", "Evidence stays attached to the outcome."],
-];
-
-export default function Home() {
-  return (
-    <main className="rp-site">
-      <header className="rp-nav">
-        <Link href="/" className="rp-logo" aria-label="ResellerPro home">
-          <span className="rp-mark">RP</span><span>ResellerPro</span>
-        </Link>
-        <nav>
-          <a href="#platform">Platform</a><a href="#operate">Operate</a><a href="#growth">Growth</a><a href="#control">Control</a>
-        </nav>
-        <Link href="/workspace" className="rp-nav-cta">Open workspace</Link>
-      </header>
-
-      <section className="rp-hero">
-        <div className="rp-hero-copy">
-          <p className="rp-kicker">MIND-REPLY / RESELLERPRO</p>
-          <h1>Build the business layer.<br /><em>Keep the system yours.</em></h1>
-          <p className="rp-lede">A single operating surface for websites, domains, commerce, agents, deployments and growth — designed around visible state, explicit control and evidence.</p>
-          <div className="rp-actions"><Link href="/workspace" className="rp-button rp-button-primary">Enter the workspace</Link><a href="#platform" className="rp-button rp-button-quiet">See the platform</a></div>
-          <div className="rp-proof"><span>CONTROL-FIRST</span><span>PROVIDER-NEUTRAL</span><span>EVIDENCE-LED</span></div>
-        </div>
-
-        <div className="rp-hero-console" aria-label="ResellerPro workspace preview">
-          <div className="rp-console-top"><span><i /> ResellerPro / Workspace</span><b>PREVIEW</b></div>
-          <div className="rp-console-body">
-            <aside><strong>Workspace</strong><span className="active">Overview</span><span>Apps</span><span>Websites</span><span>Agents</span><span>Domains</span><span>Commerce</span><span>Operations</span><span>Growth</span></aside>
-            <div className="rp-console-main">
-              <div className="rp-console-heading"><div><small>CURRENT STATE</small><h2>Everything important, visible.</h2></div><span className="rp-state">CONTROLLED</span></div>
-              <div className="rp-stat-grid">
-                {[
-                  ["Portfolio", "Domains + services", "Observed"],
-                  ["Builds", "Release candidates", "Reviewable"],
-                  ["Agents", "Bounded operators", "Governed"],
-                  ["Evidence", "Outcome records", "Traceable"],
-                ].map(([a,b,c]) => <div className="rp-stat" key={a}><small>{a}</small><strong>{b}</strong><span>{c}</span></div>)}
-              </div>
-              <div className="rp-graph"><div><span>RELEASE PATH</span><b>Source → Build → Approve → Execute → Verify → Record</b></div><div className="rp-bars"><i/><i/><i/><i/><i/><i/><i/><i/></div></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="rp-statement"><p className="rp-kicker">THE PRODUCT RULE</p><h2>It should feel as easy as a builder, but behave like an operating system.</h2><p>Start with an idea. Create the surface. Connect the infrastructure. Measure what actually happened. Improve the next move.</p></section>
-
-      <section id="platform" className="rp-section">
-        <div className="rp-section-head"><div><p className="rp-kicker">ONE PLATFORM</p><h2>Create without stitching together five products.</h2></div><p>Apps, sites, agents and commercial infrastructure share the same account, navigation, identity and release model.</p></div>
-        <div className="rp-module-grid">{modules.map(m => <article className="rp-module" key={m.id}><span>{m.id}</span><h3>{m.title}</h3><p>{m.text}</p><Link href="/workspace">Open module →</Link></article>)}</div>
-      </section>
-
-      <section id="operate" className="rp-dark-section">
-        <div className="rp-section-head"><div><p className="rp-kicker">OPERATE</p><h2>After launch, the platform becomes more useful.</h2></div><p>Keep service state, release work, integrations and evidence in the same operating picture instead of multiplying tabs.</p></div>
-        <div className="rp-operate-grid">{[
-          ["Deployments", "Promotion, rollback, health and release evidence."],
-          ["Integrations", "Connect approved providers without making them the product."],
-          ["Analytics", "Observe acquisition, conversion, service and portfolio signals."],
-          ["Workflows", "Prepare bounded operational actions without silent mutation."],
-        ].map(([title,text], i) => <div className="rp-operate-card" key={title}><span>0{i+1}</span><h3>{title}</h3><p>{text}</p><b>CONTROLLED SURFACE</b></div>)}</div>
-      </section>
-
-      <section id="growth" className="rp-section">
-        <div className="rp-section-head"><div><p className="rp-kicker">GROW AFTER SHIPPING</p><h2>Marketing tools belong next to the product.</h2></div><p>The reference model is simple: discover, engage, measure and improve — with real evidence rather than invented performance claims.</p></div>
-        <div className="rp-growth-grid">{growth.map(([n,t,c]) => <article key={n}><span>{n}</span><h3>{t}</h3><p>{c}</p></article>)}</div>
-      </section>
-
-      <section id="control" className="rp-control">
-        <div className="rp-control-copy"><p className="rp-kicker">CONTROL CONTRACT</p><h2>No proof, no claim.</h2><p>Repository intent, provider execution and runtime state are separate facts. ResellerPro keeps them separate so the interface never needs to pretend.</p></div>
-        <div className="rp-control-list">{control.map(([a,b], i) => <div key={a}><span>0{i+1}</span><strong>{a}</strong><p>{b}</p></div>)}</div>
-      </section>
-
-      <section className="rp-final"><p className="rp-kicker">RESELLERPRO / MIND-REPLY</p><h2>One workspace. Many products. One operating model.</h2><div className="rp-actions"><Link href="/workspace" className="rp-button rp-button-primary">Open workspace</Link><a href="#platform" className="rp-button rp-button-quiet">Explore platform</a></div></section>
-      <footer className="rp-footer"><span>ResellerPro · Mind-Reply</span><span>Control · execution · verification · evidence</span></footer>
-    </main>
-  );
-}
+export default function Home(){return <main className="rp-site">
+<header className="rp-nav"><Link href="/" className="rp-logo"><span className="rp-mark">RP</span><span>ResellerPro</span></Link><nav><a href="#platform">Platform</a><Link href="/services">Services</Link><a href="#operate">Operate</a><a href="#growth">Growth</a><a href="#control">Control</a></nav><Link href="/workspace" className="rp-nav-cta">Open workspace</Link></header>
+<section className="rp-hero"><div className="rp-hero-copy"><p className="rp-kicker">MIND-REPLY / RESELLERPRO</p><h1>Infrastructure first.<br/><em>Intelligence on top.</em></h1><p className="rp-lede">A single operating surface for domains, hosting, services, commerce and deployments — with innovation, analytics and managed technology layered onto infrastructure we can actually operate.</p><div className="rp-actions"><Link href="/workspace" className="rp-button rp-button-primary">Enter the workspace</Link><Link href="/services" className="rp-button rp-button-quiet">Explore services</Link></div><div className="rp-proof"><span>DOMAIN-FIRST</span><span>PROVIDER-OPERATED</span><span>EVIDENCE-LED</span></div></div>
+<div className="rp-hero-console" aria-label="ResellerPro workspace preview"><div className="rp-console-top"><span><i/> ResellerPro / Workspace</span><b>PREVIEW</b></div><div className="rp-console-body"><aside><strong>Workspace</strong><span className="active">Overview</span><span>Domains</span><span>Providers</span><span>Services</span><span>Executions</span><span>Deployments</span><span>Commerce</span><span>Evidence</span></aside><div className="rp-console-main"><div className="rp-console-heading"><div><small>OPERATING GRAPH</small><h2>Everything important, connected.</h2></div><span className="rp-state">CONTROLLED</span></div><div className="rp-stat-grid">{[["Domain","Portfolio + lifecycle","Observed"],["Provider","Registrar + hosting","Controlled"],["Services","Managed capability","Scoped"],["Evidence","Outcome records","Traceable"]].map(([a,b,c])=><div className="rp-stat" key={a}><small>{a}</small><strong>{b}</strong><span>{c}</span></div>)}</div><div className="rp-graph"><div><span>RELEASE PATH</span><b>Domain → Provider → Service → Execution → Deployment → Runtime → Evidence</b></div><div className="rp-bars"><i/><i/><i/><i/><i/><i/><i/><i/></div></div></div></div></div></section>
+<section className="rp-statement"><p className="rp-kicker">THE PRODUCT RULE</p><h2>It should feel as easy as a builder, but behave like infrastructure you can trust.</h2><p>Start with the domain. Connect the provider. Add the service. Execute the change. Verify the runtime. Keep the evidence.</p></section>
+<section id="platform" className="rp-section"><div className="rp-section-head"><div><p className="rp-kicker">ONE PLATFORM</p><h2>Infrastructure first. Everything else attaches cleanly.</h2></div><p>Domains, providers, services, deployments, commerce and evidence share the same operating model.</p></div><div className="rp-module-grid">{modules.map(m=><article className="rp-module" key={m.id}><span>{m.id}</span><h3>{m.title}</h3><p>{m.text}</p><Link href={m.title==="Services"?"/services":"/workspace"}>Open surface →</Link></article>)}</div></section>
+<section id="operate" className="rp-dark-section"><div className="rp-section-head"><div><p className="rp-kicker">OPERATE</p><h2>After launch, the platform becomes more useful.</h2></div><p>Keep service state, release work, integrations and evidence in the same operating picture instead of multiplying tabs.</p></div><div className="rp-operate-grid">{[["Providers","Registrar, hosting and infrastructure state."],["Services","Managed technology delivered against real infrastructure."],["Analytics","Observe acquisition, revenue, service and portfolio signals."],["Workflows","Prepare bounded operational actions without silent mutation."]].map(([title,text],i)=><div className="rp-operate-card" key={title}><span>0{i+1}</span><h3>{title}</h3><p>{text}</p><b>CONTROLLED SURFACE</b></div>)}</div></section>
+<section id="growth" className="rp-section"><div className="rp-section-head"><div><p className="rp-kicker">GROW AFTER SHIPPING</p><h2>Innovation belongs next to the infrastructure.</h2></div><p>Discover, engage, measure and improve — with real evidence rather than invented performance claims.</p></div><div className="rp-growth-grid">{growth.map(([n,t,c])=><article key={n}><span>{n}</span><h3>{t}</h3><p>{c}</p></article>)}</div></section>
+<section id="control" className="rp-control"><div className="rp-control-copy"><p className="rp-kicker">CONTROL CONTRACT</p><h2>No proof, no claim.</h2><p>Repository intent, provider execution and runtime state are separate facts. ResellerPro keeps them separate so the interface never needs to pretend.</p></div><div className="rp-control-list">{control.map(([a,b],i)=><div key={a}><span>0{i+1}</span><strong>{a}</strong><p>{b}</p></div>)}</div></section>
+<section className="rp-final"><p className="rp-kicker">RESELLERPRO / MIND-REPLY</p><h2>One platform. Domains first. Intelligence where it creates value.</h2><div className="rp-actions"><Link href="/workspace" className="rp-button rp-button-primary">Open workspace</Link><Link href="/services" className="rp-button rp-button-quiet">View services</Link></div></section><footer className="rp-footer"><span>ResellerPro · Mind-Reply</span><span>Domain · provider · service · execution · evidence</span></footer></main>}
