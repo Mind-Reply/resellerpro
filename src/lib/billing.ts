@@ -238,6 +238,75 @@ async function upsertSubscriptionFromObject(object: any, eventType: string) {
   }
 }
 
+
+export async function createOneTimeCheckoutSession(input: {
+  customerId: string;
+  workspaceId: string;
+  email: string;
+  returnUrl: string;
+}) {
+  assertCheckoutReady();
+  const price = process.env.STRIPE_PRICE_ONE_TIME || "";
+  if (!price) throw new Error("Stripe one-time price is not configured for this release.");
+
+  const stripe = getStripe();
+  const stripePrice = await stripe.prices.retrieve(price);
+  if (!stripePrice.active || stripePrice.type !== "one_time") {
+    throw new Error("Configured one-time Stripe price is not active or is not one-time.");
+  }
+
+  const session = await stripe.checkout.sessions.create({
+    mode: "payment",
+    line_items: [{ price: stripePrice.id, quantity: 1 }],
+    success_url: safeReturnUrl(input.returnUrl),
+    cancel_url: safeReturnUrl(input.returnUrl),
+    customer_email: input.email,
+    client_reference_id: input.customerId,
+    metadata: {
+      customerId: input.customerId,
+      workspaceId: input.workspaceId,
+      paymentKind: "one_time",
+    },
+  });
+
+  await prisma.transaction.create({
+    data: {
+      workspaceId: input.workspaceId,
+      customerId: input.customerId,
+      stripeCheckoutSessionId: session.id,
+      type: "one_time_checkout",
+      description: "One-time commercial checkout",
+      amount: Number(stripePrice.unit_amount || 0) / 100,
+      currency: stripePrice.currency.toUpperCase(),
+      status: "pending",
+    },
+  });
+
+  return { id: session.id, url: session.url, mode: mode() };
+}
+
+export async function createBillingPortalSession(input: {
+  customerId: string;
+  returnUrl: string;
+}) {
+  assertCheckoutReady();
+  const subscription = await prisma.subscription.findFirst({
+    where: { customerId: input.customerId },
+    orderBy: { updatedAt: "desc" },
+  });
+  if (!subscription?.stripeCustomerId) {
+    throw new Error("No Stripe customer is associated with this account.");
+  }
+
+  const stripe = getStripe();
+  const session = await stripe.billingPortal.sessions.create({
+    customer: subscription.stripeCustomerId,
+    return_url: safeReturnUrl(input.returnUrl),
+  });
+
+  return { id: session.id, url: session.url, mode: mode() };
+}
+
 export async function handleStripeWebhook(rawBody: string, signature: string) {
   const ready = getBillingReadiness();
   if (!ready.webhookEnabled) throw new Error("Stripe webhooks are not enabled for this release.");
@@ -321,6 +390,31 @@ export async function handleStripeWebhook(rawBody: string, signature: string) {
       event.type === "customer.subscription.deleted"
     ) {
       await upsertSubscriptionFromObject(object, event.type);
+    } else if (event.type === "payment_intent.succeeded" || event.type === "payment_intent.payment_failed" || event.type === "payment_intent.canceled") {
+      const paymentIntentId = String(object.id || "");
+      const customerId = object.customer ? String(object.customer) : "";
+      const transaction = paymentIntentId
+        ? await prisma.transaction.findFirst({ where: { stripePaymentIntentId: paymentIntentId } })
+        : null;
+      if (transaction) {
+        await prisma.transaction.update({
+          where: { id: transaction.id },
+          data: {
+            status: event.type === "payment_intent.succeeded" ? "paid" : event.type === "payment_intent.canceled" ? "canceled" : "failed",
+            amount: Number(object.amount_received ?? object.amount ?? 0) / 100,
+            currency: String(object.currency || "usd").toUpperCase(),
+            stripeCustomerId: customerId || transaction.stripeCustomerId,
+          },
+        });
+      }
+    } else if (event.type === "charge.refunded") {
+      const paymentIntentId = object.payment_intent ? String(object.payment_intent) : "";
+      if (paymentIntentId) {
+        await prisma.transaction.updateMany({
+          where: { stripePaymentIntentId: paymentIntentId },
+          data: { status: "refunded" },
+        });
+      }
     } else if (event.type === "invoice.paid" || event.type === "invoice.payment_failed") {
       const stripeSubscriptionId = object.subscription ? String(object.subscription) : null;
       const subscription = stripeSubscriptionId
