@@ -47,24 +47,19 @@ export default function Home() {
           <div className="rp-proof"><span>CONTROL-FIRST</span><span>PROVIDER-NEUTRAL</span><span>EVIDENCE-LED</span></div>
         </div>
 
-        <div className="rp-hero-console" aria-label="ResellerPro workspace preview">
-          <div className="rp-console-top"><span><i /> ResellerPro / Workspace</span><b>PREVIEW</b></div>
-          <div className="rp-console-body">
-            <aside><strong>Workspace</strong><span className="active">Overview</span><span>Apps</span><span>Websites</span><span>Agents</span><span>Domains</span><span>Commerce</span><span>Operations</span><span>Growth</span></aside>
-            <div className="rp-console-main">
-              <div className="rp-console-heading"><div><small>CURRENT STATE</small><h2>Everything important, visible.</h2></div><span className="rp-state">CONTROLLED</span></div>
-              <div className="rp-stat-grid">
-                {[
-                  ["Portfolio", "Domains + services", "Observed"],
-                  ["Builds", "Release candidates", "Reviewable"],
-                  ["Agents", "Bounded operators", "Governed"],
-                  ["Evidence", "Outcome records", "Traceable"],
-                ].map(([a,b,c]) => <div className="rp-stat" key={a}><small>{a}</small><strong>{b}</strong><span>{c}</span></div>)}
-              </div>
-              <div className="rp-graph"><div><span>RELEASE PATH</span><b>Source → Build → Approve → Execute → Verify → Record</b></div><div className="rp-bars"><i/><i/><i/><i/><i/><i/><i/><i/></div></div>
-            </div>
-          </div>
+        <div className="rp-hero-console" aria-label="ResellerPro hero video">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/og-3650.png"
+            style={{ width: "100%", display: "block", aspectRatio: "16 / 9", objectFit: "cover", border: "1px solid #17302c", borderRadius: "18px" }}
+          >
+            <source src="/hero-3650.mp4" type="video/mp4" />
+          </video>
         </div>
+
       </section>
 
       <section className="rp-statement"><p className="rp-kicker">THE PRODUCT RULE</p><h2>It should feel as easy as a builder, but behave like an operating system.</h2><p>Start with an idea. Create the surface. Connect the infrastructure. Measure what actually happened. Improve the next move.</p></section>
