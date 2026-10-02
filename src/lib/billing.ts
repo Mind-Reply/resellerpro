@@ -250,9 +250,14 @@ export async function createOneTimeCheckoutSession(input: {
   if (!price) throw new Error("Stripe one-time price is not configured for this release.");
 
   const stripe = getStripe();
+  const stripePrice = await stripe.prices.retrieve(price);
+  if (!stripePrice.active || stripePrice.type !== "one_time") {
+    throw new Error("Configured one-time Stripe price is not active or is not one-time.");
+  }
+
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
-    line_items: [{ price, quantity: 1 }],
+    line_items: [{ price: stripePrice.id, quantity: 1 }],
     success_url: safeReturnUrl(input.returnUrl),
     cancel_url: safeReturnUrl(input.returnUrl),
     customer_email: input.email,
@@ -271,8 +276,8 @@ export async function createOneTimeCheckoutSession(input: {
       stripeCheckoutSessionId: session.id,
       type: "one_time_checkout",
       description: "One-time commercial checkout",
-      amount: 0,
-      currency: "USD",
+      amount: Number(stripePrice.unit_amount || 0) / 100,
+      currency: stripePrice.currency.toUpperCase(),
       status: "pending",
     },
   });
