@@ -25,8 +25,8 @@ Vercel is explicitly excluded from the production authority path.
 
 - Organization destination: COMPLETE
 - Source freeze: APPLIED
-- Full application tree transfer: PENDING
-- Production authority: NOT YET CLAIMED
+- Full application tree transfer: COMPLETE (105 source files promoted on 2026-10-03)
+- Production authority: NOT YET CLAIMED (runtime evidence still required)
 
 See `RESELLERPRO_COMPLETE.md` and `SOURCE_SYNC_MANIFEST_2026-09-30.md`.
 
