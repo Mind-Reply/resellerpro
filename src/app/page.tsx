@@ -33,7 +33,7 @@ export default function Home() {
           <span className="rp-mark">RP</span><span>ResellerPro</span>
         </Link>
         <nav>
-          <a href="#platform">Platform</a><a href="#operate">Operate</a><a href="#growth">Growth</a><a href="#control">Control</a>
+          <a href="#platform">Platform</a><a href="/enterprise">Enterprise</a><a href="#operate">Operate</a><a href="#growth">Growth</a><a href="#control">Control</a>
         </nav>
         <Link href="/workspace" className="rp-nav-cta">Open workspace</Link>
       </header>
