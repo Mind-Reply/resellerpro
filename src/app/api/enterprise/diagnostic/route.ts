@@ -108,23 +108,25 @@ export async function POST(request: Request) {
       },
     });
 
-    await prisma.auditEvent.create({
-      data: {
-        workspaceId: session?.workspaceId ?? (await prisma.workspace.findFirst({ orderBy: { createdAt: "asc" }, select: { id: true } }))?.id ?? "",
-        actorType: session ? "customer" : "public",
-        actorId: session?.id ?? null,
-        eventType: "enterprise_diagnostic.submitted",
-        entityType: "EnterpriseAssessment",
-        entityId: assessment.id,
-        outcome: "success",
-        details: {
-          region: input.region,
-          primaryPillar: input.primaryPillar,
-          auditVerificationHash,
+    if (session?.workspaceId) {
+      await prisma.auditEvent.create({
+        data: {
+          workspaceId: session.workspaceId,
+          actorType: "customer",
+          actorId: session.id,
+          eventType: "enterprise_diagnostic.submitted",
+          entityType: "EnterpriseAssessment",
+          entityId: assessment.id,
+          outcome: "success",
+          details: {
+            region: input.region,
+            primaryPillar: input.primaryPillar,
+            auditVerificationHash,
+          },
+          payloadHash: auditVerificationHash,
         },
-        payloadHash: auditVerificationHash,
-      },
-    }).catch(() => undefined);
+      }).catch(() => undefined);
+    }
 
     return NextResponse.json({
       success: true,
