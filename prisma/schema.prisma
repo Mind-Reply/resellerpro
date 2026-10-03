@@ -426,3 +426,23 @@ model Transaction {
   @@index([customerId, createdAt])
   @@index([subscriptionId, createdAt])
 }
+
+model EnterpriseAssessment {
+  id                   String   @id @default(cuid())
+  userId               String?
+  companyName          String
+  contactEmail         String
+  region               String
+  dataMaturity         String
+  primaryPillar        String
+  complianceZone       String
+  exposureRiskScore    Decimal  @db.Decimal(5, 2)
+  auditVerificationHash String  @unique
+  status               String   @default("pending_review")
+  proposalBlueprint    Json
+  createdAt            DateTime @default(now())
+
+  @@index([status, createdAt])
+  @@index([contactEmail])
+  @@index([region, primaryPillar])
+}
