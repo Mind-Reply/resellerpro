@@ -63,3 +63,4 @@ jobs:
           curl --fail --silent --show-error --location "$HEALTH_URL"
 
 # Release trigger retained on main; deployment is verified by the final health job.
+# Canonical first-publish path: GitHub main -> validation -> Cloudflare/OpenNext -> health.
