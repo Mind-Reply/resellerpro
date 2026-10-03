@@ -9,7 +9,7 @@
 - [ ] Assess historical Supabase pool token exposure; rotate if ever live.
 - [ ] Resolve Supabase security advisor findings: 15 public tables have RLS enabled but no policies.
 - [x] Organization governance COMPLETE + SOURCE-FREEZE on personal mirrors (2026-09-30).
-- [ ] Full application tree transfer completion (in progress — first batch executed).
+- [x] Full application tree transfer completion (105 UTF-8 source files promoted to `Mind-Reply/resellerpro` on 2026-10-03).
 
 ## High
 - [ ] Bind canonical production hostname for ResellerPro registrar surface.
