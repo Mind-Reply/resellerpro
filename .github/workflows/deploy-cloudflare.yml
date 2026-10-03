@@ -59,7 +59,7 @@ jobs:
         env:
           HEALTH_URL: ${{ vars.RESELLERPRO_HEALTH_URL }}
         run: |
-          test -n $"$HEALTH_URL"
-          curl --fail --silent --show-error --location $"$HEALTH_URL"
+          test -n "$HEALTH_URL"
+          curl --fail --silent --show-error --location "$HEALTH_URL"
 
 # Release trigger retained on main; deployment is verified by the final health job.
