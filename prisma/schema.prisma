@@ -1,0 +1,448 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Workspace {
+  id           String            @id @default(cuid())
+  name         String
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  customers    Customer[]
+  quotes       Quote[]
+  domains      Domain[]
+  orders       Order[]
+  services     Service[]
+  invoices     Invoice[]
+  tickets      SupportTicket[]
+  events       AuditEvent[]
+  operations   DomainOperation[]
+  webhookEvents WebhookEvent[]
+  carts        Cart[]
+  acquisitionEvents AcquisitionEvent[]
+  subscriptions Subscription[]
+  transactions Transaction[]
+}
+
+model Customer {
+  id              String          @id @default(cuid())
+  workspaceId     String
+  email           String
+  passwordHash    String?
+  googleId        String?         @unique
+  displayName     String?
+  profileComplete Boolean         @default(false)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  workspace       Workspace       @relation(fields: [workspaceId], references: [id])
+  domains         Domain[]
+  quotes          Quote[]
+  orders          Order[]
+  services        Service[]
+  invoices       Invoice[]
+  tickets        SupportTicket[]
+  consents        Consent[]
+  carts           Cart[]
+  subscriptions   Subscription[]
+  transactions    Transaction[]
+
+  @@unique([workspaceId, email])
+  @@index([email])
+  @@index([googleId])
+}
+
+model Domain {
+  id                String            @id @default(cuid())
+  workspaceId       String
+  customerId        String?
+  domain            String
+  provider          String?
+  providerReference String?
+  lifecycleState    String
+  evidence          String
+  expiresAt         DateTime?
+  autoRenew         Boolean?
+  privacyEnabled    Boolean?
+  registrarLock     Boolean?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  workspace         Workspace         @relation(fields: [workspaceId], references: [id])
+  customer          Customer?         @relation(fields: [customerId], references: [id])
+  operations        DomainOperation[]
+  dnsRecords        DnsRecord[]
+  tickets           SupportTicket[]
+
+  @@unique([workspaceId, domain])
+  @@index([customerId])
+}
+
+model Quote {
+  id                String        @id @default(cuid())
+  workspaceId       String
+  customerId        String?
+  acquisitionSessionId String?
+  domain            String
+  action            String
+  years             Int
+  currency          String
+  wholesaleAmount   Decimal       @db.Decimal(18, 4)
+  retailAmount      Decimal       @db.Decimal(18, 4)
+  evidence          String
+  status            String
+  provider          String?
+  providerReference String?
+  quoteTokenHash    String?
+  expiresAt         DateTime
+  createdAt         DateTime      @default(now())
+  workspace         Workspace     @relation(fields: [workspaceId], references: [id])
+  customer          Customer?     @relation(fields: [customerId], references: [id])
+  consents          Consent[]
+  order             Order?
+  cartItems         CartItem[]
+
+  @@index([workspaceId, domain])
+  @@index([expiresAt])
+  @@index([customerId])
+  @@index([acquisitionSessionId])
+}
+
+model Consent {
+  id               String   @id @default(cuid())
+  quoteId          String
+  customerId       String
+  agreementKey     String
+  agreementVersion String
+  acceptedAt       DateTime
+  sourceIpHash     String?
+  userAgentHash    String?
+  quote            Quote    @relation(fields: [quoteId], references: [id])
+  customer         Customer @relation(fields: [customerId], references: [id])
+
+  @@unique([quoteId, customerId, agreementKey])
+}
+
+model Order {
+  id                 String             @id @default(cuid())
+  workspaceId        String
+  customerId         String?
+  quoteId            String?            @unique
+  acquisitionSessionId String?
+  status             String
+  currency           String
+  subtotal           Decimal            @db.Decimal(18, 4)
+  tax                Decimal            @db.Decimal(18, 4)
+  total              Decimal            @db.Decimal(18, 4)
+  idempotencyKeyHash String             @unique
+  paymentReference   String?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  workspace          Workspace          @relation(fields: [workspaceId], references: [id])
+  customer           Customer?         @relation(fields: [customerId], references: [id])
+  quote              Quote?             @relation(fields: [quoteId], references: [id])
+  operations         DomainOperation[]
+  invoices           Invoice[]
+  tickets            SupportTicket[]
+
+  @@index([workspaceId, status])
+  @@index([customerId])
+  @@index([acquisitionSessionId])
+}
+
+model DomainOperation {
+  id                   String   @id @default(cuid())
+  workspaceId          String
+  domainId             String
+  orderId              String?
+  action               String
+  status               String
+  idempotencyKeyHash   String
+  provider             String?
+  providerReference    String?
+  sideEffectPerformed  Boolean  @default(false)
+  requestPayloadHash   String?
+  responsePayloadHash  String?
+  lastError            String?
+  attempts             Int      @default(0)
+  claimedAt            DateTime?
+  claimToken           String?
+  nextAttemptAt        DateTime?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  domain               Domain   @relation(fields: [domainId], references: [id])
+  workspace            Workspace @relation(fields: [workspaceId], references: [id])
+  order                Order?   @relation(fields: [orderId], references: [id])
+
+  @@unique([workspaceId, idempotencyKeyHash])
+  @@index([status, updatedAt])
+  @@index([status, nextAttemptAt, createdAt])
+  @@index([domainId, updatedAt])
+}
+
+model Service {
+  id          String          @id @default(cuid())
+  workspaceId String
+  customerId  String?
+  name        String
+  type        String
+  state       String
+  provider    String?
+  externalId  String?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  workspace   Workspace       @relation(fields: [workspaceId], references: [id])
+  customer    Customer?       @relation(fields: [customerId], references: [id])
+  tickets     SupportTicket[]
+
+  @@index([workspaceId, state])
+  @@index([customerId])
+}
+
+model Invoice {
+  id          String          @id @default(cuid())
+  workspaceId String
+  customerId  String?
+  orderId     String?
+  status      String
+  currency    String
+  subtotal    Decimal         @db.Decimal(18, 4)
+  tax         Decimal         @db.Decimal(18, 4)
+  total       Decimal         @db.Decimal(18, 4)
+  dueAt       DateTime?
+  paidAt      DateTime?
+  createdAt   DateTime        @default(now())
+  workspace   Workspace       @relation(fields: [workspaceId], references: [id])
+  customer    Customer?       @relation(fields: [customerId], references: [id])
+  order       Order?          @relation(fields: [orderId], references: [id])
+  tickets     SupportTicket[]
+
+  @@index([workspaceId, status])
+  @@index([customerId])
+  @@index([orderId])
+}
+
+model SupportTicket {
+  id          String    @id @default(cuid())
+  workspaceId String
+  customerId  String?
+  domainId    String?
+  serviceId   String?
+  orderId     String?
+  invoiceId   String?
+  subject     String
+  status      String
+  priority    String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  customer    Customer? @relation(fields: [customerId], references: [id])
+  domain      Domain?   @relation(fields: [domainId], references: [id])
+  service     Service?  @relation(fields: [serviceId], references: [id])
+  order       Order?    @relation(fields: [orderId], references: [id])
+  invoice     Invoice?  @relation(fields: [invoiceId], references: [id])
+
+  @@index([workspaceId, status])
+  @@index([customerId, updatedAt])
+  @@index([domainId])
+  @@index([serviceId])
+}
+
+model DnsRecord {
+  id         String   @id @default(cuid())
+  domainId   String
+  type       String
+  name       String
+  content    String
+  ttl        Int
+  priority   Int?
+  state      String
+  providerId String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  domain     Domain   @relation(fields: [domainId], references: [id])
+
+  @@index([domainId, name, type])
+}
+
+model AuditEvent {
+  id             String    @id @default(cuid())
+  workspaceId    String
+  actorType      String
+  actorId        String?
+  eventType      String
+  entityType     String
+  entityId       String?
+  outcome        String
+  details        Json?
+  payloadHash    String?
+  occurredAt     DateTime  @default(now())
+  workspace      Workspace @relation(fields: [workspaceId], references: [id])
+
+  @@index([workspaceId, occurredAt])
+  @@index([eventType])
+  @@index([entityType, entityId])
+}
+
+model WebhookEvent {
+  id            String     @id @default(cuid())
+  workspaceId   String?
+  stripeEventId String     @unique
+  type          String
+  status        String
+  processedAt   DateTime   @default(now())
+  workspace     Workspace? @relation(fields: [workspaceId], references: [id])
+
+  @@index([stripeEventId])
+  @@index([processedAt])
+}
+
+model Cart {
+  id          String     @id @default(cuid())
+  workspaceId String
+  customerId  String?
+  status      String     @default("active")
+  expiresAt   DateTime
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  customer    Customer? @relation(fields: [customerId], references: [id])
+  items       CartItem[]
+
+  @@index([workspaceId, status])
+  @@index([customerId, status])
+  @@index([expiresAt])
+}
+
+model CartItem {
+  id             String   @id @default(cuid())
+  cartId         String
+  quoteId        String
+  quantity       Int      @default(1)
+  unitAmount     Decimal  @db.Decimal(18, 4)
+  currency       String
+  domainSnapshot String
+  action         String
+  years          Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  cart           Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  quote          Quote    @relation(fields: [quoteId], references: [id])
+
+  @@unique([cartId, quoteId])
+  @@index([quoteId])
+}
+
+model AcquisitionEvent {
+  id                 String    @id @default(cuid())
+  eventId            String    @unique
+  eventType          String
+  anonymousSessionId String?
+  workspaceId        String?
+  source             String?
+  medium             String?
+  campaign           String?
+  content            String?
+  term               String?
+  landingPath        String?
+  referrer           String?
+  product            String?
+  currency           String?
+  value              Decimal?  @db.Decimal(18, 4)
+  consentState       String
+  occurredAt         DateTime  @default(now())
+  workspace          Workspace? @relation(fields: [workspaceId], references: [id])
+
+  @@index([eventType, occurredAt])
+  @@index([campaign, occurredAt])
+  @@index([workspaceId, occurredAt])
+  @@index([anonymousSessionId, occurredAt])
+}
+
+model DiagnosticSubmission {
+  id           String   @id @default(cuid())
+  organisation String
+  email        String
+  region       String
+  constraint   String
+  context      String
+  status       String   @default("RECEIVED")
+  plan         Json
+  source       String   @default("enterprise-diagnostic")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([status, createdAt])
+  @@index([email])
+  @@index([region, constraint])
+}
+
+
+model Subscription {
+  id                  String   @id @default(cuid())
+  workspaceId         String
+  customerId          String
+  planId              String
+  status              String   @default("incomplete")
+  stripeCustomerId    String?  @unique
+  stripeSubscriptionId String? @unique
+  currentPeriodStart  DateTime?
+  currentPeriodEnd    DateTime?
+  cancelAtPeriodEnd   Boolean  @default(false)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  workspace           Workspace @relation(fields: [workspaceId], references: [id])
+  customer            Customer  @relation(fields: [customerId], references: [id])
+  transactions        Transaction[]
+
+  @@index([workspaceId, status])
+  @@index([customerId, status])
+}
+
+model Transaction {
+  id                       String   @id @default(cuid())
+  workspaceId              String
+  customerId              String
+  subscriptionId           String?
+  stripeCheckoutSessionId  String?  @unique
+  stripePaymentIntentId   String?  @unique
+  stripeInvoiceId         String?  @unique
+  stripeCustomerId        String?
+  stripeSubscriptionId    String?
+  type                     String
+  description              String
+  amount                   Decimal  @db.Decimal(18, 4)
+  currency                 String   @default("USD")
+  status                   String   @default("pending")
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  workspace                Workspace @relation(fields: [workspaceId], references: [id])
+  customer                 Customer @relation(fields: [customerId], references: [id])
+  subscription             Subscription? @relation(fields: [subscriptionId], references: [id])
+
+  @@index([workspaceId, createdAt])
+  @@index([customerId, createdAt])
+  @@index([subscriptionId, createdAt])
+}
+
+model EnterpriseAssessment {
+  id                   String   @id @default(cuid())
+  userId               String?
+  companyName          String
+  contactEmail         String
+  region               String
+  dataMaturity         String
+  primaryPillar        String
+  complianceZone       String
+  exposureRiskScore    Decimal  @db.Decimal(5, 2)
+  auditVerificationHash String  @unique
+  status               String   @default("pending_review")
+  proposalBlueprint    Json
+  createdAt            DateTime @default(now())
+
+  @@index([status, createdAt])
+  @@index([contactEmail])
+  @@index([region, primaryPillar])
+}
