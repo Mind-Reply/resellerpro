@@ -44,7 +44,7 @@ Historical Vercel deployments may exist, but Vercel is **not** the active produc
 
 ## Release state
 
-**CODE: READY / DEPLOYMENT PATH: CONFIGURED / RELEASE: IN_PROGRESS / RUNTIME: pending_evidence / MUTATIONS: FAIL-CLOSED**
+**CODE: READY / DEPLOYMENT PATH: CONFIGURED / RELEASE: READY FOR RUNTIME VERIFICATION / RUNTIME: pending_evidence / MUTATIONS: FAIL-CLOSED**
 
 A deployment being configured or previously marked READY does not prove current runtime health.
 
