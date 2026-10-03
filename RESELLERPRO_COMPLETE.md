@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-30
 **Authority:** Mind-Reply / A11-K
-**Status:** ORGANIZATION CANONICAL + FIRST TRANSFER BATCH EXECUTED
+**Status:** ORGANIZATION CANONICAL + FULL UTF-8 SOURCE TREE TRANSFERRED (2026-10-03)
 
 ## What is complete
 
@@ -19,18 +19,19 @@
 
 ## Remaining for production authority
 
-- Remaining application tree reconciliation (src / app / lib / workflows / tests / prisma migrations where divergent)
-- Binary/archive Git-object transfer where required
+- Runtime smoke + health evidence on Cloudflare
+- Stripe webhook end-to-end proof
+- Openprovider sandbox registration proof
 - Runtime smoke + health evidence on Cloudflare
 - Stripe webhook end-to-end proof
 - Openprovider sandbox registration proof
 
 ## Publish posture
 
-Governance + first executable transfer batch: **DONE**.
-Production authority remains **NOT YET CLAIMED** until remaining transfer + evidence gates close.
+Governance + full UTF-8 source transfer: **DONE**.
+Production authority remains **NOT YET CLAIMED** until runtime and provider evidence closes.
 
-**Next:** continue batch transfer of divergent application files, then Cloudflare release with evidence capture.
+**Next:** Cloudflare release, smoke/health verification, and evidence capture.
 
 ---
 *Sealed under A11 Owner Operating System — VERIFY → PROVE → PROTECT → EXECUTE → KEEP*
