@@ -1,33 +1,27 @@
-# ResellerPro organization repository authority
+# ResellerPro — organization mirror (SOURCE-FREEZE)
 
 **Product:** ResellerPro  
-**Organization repository:** `Mind-Reply/resellerpro`  
-**Current implementation source:** `Mind-Reply/resellerpro`  
-**State:** CANONICAL / GOVERNANCE COMPLETE (2026-09-30)
+**This repository:** `Mind-Reply/resellerpro` — LEGACY / provenance mirror only  
+**Canonical engineering source:** `angellllkr-eng/resellerpro-platform`  
+**State:** SOURCE-FREEZE (2026-10-05)
 
-This repository is the single organization source for the ResellerPro platform.
+Do not start new product or production work here.
 
-Historical sources:
-- `angellllkr-eng/resellerpro-platform` — SOURCE-FREEZE / provenance-only
-- `angellllkr-eng/reseller-pro-enterprise` — SOURCE-FREEZE / provenance-only
-- `angellllkr-eng/reseller-pro` — LEGACY / SOURCE-FREEZE
+## Authority
 
-The unified implementation covers the combined platform baseline:
-domains, workspace, provider orchestration, commerce, orders, invoices, account sessions, subscriptions, transactions, acquisition intelligence, analytics, operations and evidence.
+| Concern | Authority |
+|---------|-----------|
+| Active source code | `angellllkr-eng/resellerpro-platform` |
+| Runtime | Cloudflare Workers + OpenNext |
+| Vercel | Not production authority |
 
-Runtime target:
+## Historical sources (also frozen)
 
-`GitHub → validation → ResellerPro → Cloudflare Workers/OpenNext → smoke/health → evidence`
+- `angellllkr-eng/reseller-pro-enterprise` — provenance-only
+- `angellllkr-eng/reseller-pro` — LEGACY
 
-Vercel is explicitly excluded from the production authority path.
+## Next action for this repo
 
-## Governance status (2026-09-30)
+Archive via GitHub repository settings after external-reference verification.
 
-- Organization destination: COMPLETE
-- Source freeze: APPLIED
-- Full application tree transfer: COMPLETE (105 source files promoted on 2026-10-03)
-- Production authority: NOT YET CLAIMED (runtime evidence still required)
-
-See `RESELLERPRO_COMPLETE.md` and `SOURCE_SYNC_MANIFEST_2026-09-30.md`.
-
-Repository state is not runtime proof. A deployment is only represented as live after URL/health verification and evidence recording.
+**Rule:** one product, one active repository.
