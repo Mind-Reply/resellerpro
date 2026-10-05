@@ -1,15 +1,22 @@
-# ResellerPro — Organization Legacy Mirror
+# ResellerPro
 
-**Status:** LEGACY / SOURCE-FREEZE
+Organization-owned ResellerPro repository for the Mind-Reply estate.
 
-**Canonical engineering repository:** `angellllkr-eng/resellerpro-platform`
+**Organization repository:** `Mind-Reply/resellerpro`
+**Personal engineering source:** `angellllkr-eng/resellerpro-platform`
 
-This repository is retained temporarily for provenance and reconciliation only. Do not start new product or production work here.
+## Agent rule
 
-The canonical platform contains the unified ResellerPro implementation, enterprise modernization diagnostics, billing boundaries, audit evidence and current runtime direction.
+Use `Mind-Reply/resellerpro` for organization-owned release and operational work. Use `angellllkr-eng/resellerpro-platform` for personal engineering/source work. Do not create or use additional ResellerPro repositories.
 
-**Retirement action:** archive this repository through GitHub repository administration after reconciliation and external-reference verification.
+Historical repositories named `reseller-pro*` are migration/provenance sources only and are not active implementations.
 
-**Rule:** one product, one active repository.
+## Runtime
 
-See the canonical repository for all new work.
+`GitHub → validation → ResellerPro → Cloudflare Workers/OpenNext → smoke/health → evidence`
+
+Vercel is not production authority.
+
+## Runtime truth
+
+Repository state is not runtime proof. A deployment is only LIVE after URL/health verification and evidence recording.
