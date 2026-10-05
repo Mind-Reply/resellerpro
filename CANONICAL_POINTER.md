@@ -1,27 +1,19 @@
-# ResellerPro — organization mirror (SOURCE-FREEZE)
+# ResellerPro — organization repository authority
 
-**Product:** ResellerPro  
-**This repository:** `Mind-Reply/resellerpro` — LEGACY / provenance mirror only  
-**Canonical engineering source:** `angellllkr-eng/resellerpro-platform`  
-**State:** SOURCE-FREEZE (2026-10-05)
+**Organization repository:** `Mind-Reply/resellerpro`
+**Personal engineering source:** `angellllkr-eng/resellerpro-platform`
 
-Do not start new product or production work here.
+This repository is the **organization-owned ResellerPro repository**.
 
-## Authority
+Agent rules:
+- Organization releases and operations: this repository.
+- Personal engineering/source work: `angellllkr-eng/resellerpro-platform`.
+- Historical `reseller-pro*` repositories: provenance/migration only.
+- Do not create another ResellerPro repository in Mind-Reply.
+- Keep organization changes aligned with the personal engineering source before release work.
 
-| Concern | Authority |
-|---------|-----------|
-| Active source code | `angellllkr-eng/resellerpro-platform` |
-| Runtime | Cloudflare Workers + OpenNext |
-| Vercel | Not production authority |
+Runtime: `GitHub → validation → ResellerPro → Cloudflare Workers/OpenNext → smoke/health → evidence`
 
-## Historical sources (also frozen)
+Vercel is not production authority.
 
-- `angellllkr-eng/reseller-pro-enterprise` — provenance-only
-- `angellllkr-eng/reseller-pro` — LEGACY
-
-## Next action for this repo
-
-Archive via GitHub repository settings after external-reference verification.
-
-**Rule:** one product, one active repository.
+Repository state is not runtime proof. A deployment is only LIVE after URL/health verification and evidence recording.
