@@ -2,7 +2,9 @@
 
 ## Scope
 
-* Treat this repository as the canonical A11-K ResellerPro working tree.
+* Treat this repository as the organization-owned ResellerPro release/operations copy.
+* Personal engineering source of truth: `angellllkr-eng/resellerpro-platform`.
+* Do not route personal engineering work back into this organization copy.
 * Make small, explicit changes and preserve unrelated work.
 * Do not perform destructive, financial, credential, DNS, access-control or production actions outside the explicitly approved scope.
 * Record exact commit SHAs and validation evidence for material changes.
@@ -24,6 +26,7 @@
 ## Settlement & control standard
 
 * ResellerPro is Platform 01 and the estate execution authority.
+* GitHub source authority is `angellllkr-eng/resellerpro-platform`; this repository is the organization release/operations surface.
 * Canonical path: GitHub → ResellerPro → runtime → direct verification → evidence.
 * Cloudflare Workers/OpenNext is the current runtime path.
 * Vercel is not an active deployment authority.
