@@ -16,6 +16,15 @@ export const CAPABILITY_REGISTRY = [
   { key: "owner-control", sourceTrack: "Bubble", capability: "Owner approval/control", canonical: "agent-control-plane", implementation: "approval and audit boundaries" },
   { key: "mobile-first", sourceTrack: "Lovable", capability: "Mobile/iPhone-first operation", canonical: "MindReply", implementation: "responsive owner/product surfaces" },
   { key: "idea-to-evidence-loop", sourceTrack: "Replit Agent", capability: "Idea → visual → implementation → test → deploy → verify → evidence → iterate", canonical: "agent-control-plane", implementation: "cross-repository release contract" },
+
+  { key: "enterprise-ai-ml", sourceTrack: "Enterprise", capability: "Artificial Intelligence & Machine Learning", canonical: "ResellerPro", implementation: "use-case evaluation, human review, measured model evidence and rollback controls" },
+  { key: "enterprise-data-analytics", sourceTrack: "Enterprise", capability: "Data & Analytics", canonical: "ResellerPro", implementation: "data quality, lineage, metric definitions and decision-ready reporting" },
+  { key: "enterprise-it-infrastructure-modernisation", sourceTrack: "Enterprise", capability: "IT Infrastructure Modernisation", canonical: "ResellerPro", implementation: "workload inventory, resilience baseline, migration waves and recovery evidence" },
+  { key: "enterprise-application-modernisation-development", sourceTrack: "Enterprise", capability: "Application Modernisation & Development", canonical: "ResellerPro", implementation: "incremental application changes, integration contracts, tests and rollback evidence" },
+  { key: "enterprise-security", sourceTrack: "Enterprise", capability: "Security", canonical: "ResellerPro", implementation: "identity-first access, secure development, incident readiness and retested controls" },
+  { key: "enterprise-managed-services", sourceTrack: "Enterprise", capability: "Managed Services", canonical: "ResellerPro", implementation: "service ownership, health/error signals, incident handling and reviewable change" },
+  { key: "enterprise-digital-workplace", sourceTrack: "Enterprise", capability: "Digital Workplace", canonical: "ResellerPro", implementation: "collaboration, identity, device posture and usable operational workflows" },
+  { key: "enterprise-training", sourceTrack: "Enterprise", capability: "Training & Enablement", canonical: "ResellerPro", implementation: "role-based learning, incident exercises, runbooks and handover acceptance" },
 ] as const;
 
 export type CapabilityKey = (typeof CAPABILITY_REGISTRY)[number]["key"];
